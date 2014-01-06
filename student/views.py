@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from course.models import Student, WebResource, CodeResource, DemoResource
+from course.models import Student
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate
 from django.shortcuts import redirect
@@ -16,14 +16,12 @@ def students(request):
 
 @login_required
 def student_profile(request):
-	allRelevantRes  = WebResource.objects.filter(parent = request.GET.get("id","NULL"))
-	allCodeRes      = CodeResource.objects.filter(parent = request.GET.get("id","NULL"))
-	allDemoRes      = DemoResource.objects.filter(parent = request.GET.get("id","NULL"))
+	allRelevantRes  = Student.objects.filter(id = 0)
 	template        = loader.get_template('student/profile.html')
 	authenticater   = request.user.is_authenticated()
-	context         = RequestContext(request, {'res': allRelevantRes, 'code': allCodeRes, 'demo': allDemoRes, 'authenticated':authenticater,})
+	context         = RequestContext(request, {'res': allRelevantRes, 'authenticated':authenticater,})
 	
-    return HttpResponse(template.render(context))
+	return HttpResponse(template.render(context))
 
 @login_required
 def logout_user(request):

@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from course.models import Lesson, WebResource, CodeResource, DemoResource
+from course.models import Student
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate
 from django.shortcuts import redirect
