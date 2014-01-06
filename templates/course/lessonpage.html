@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        var p_elements = document.getElementById('code').getElementsByTagName('code');
+        var unixNewLine = new RegExp("\n", "g");
+        for (var i = p_elements.length - 1; i >= 0; i--) {
+            p_elements[i].innerHTML = p_elements[i].innerHTML.replace(unixNewLine, '<br/>');
+        }
+    }
+</script>
+{% endblock %}
+
+{% block title %} - {{block.super}}{%endblock%}
+
+{% block content %}
+		{%for r in res%}
+	<div class="lesson">
+		<div class="lesson-left">
+			<span><h2>{{r.name}}</h2>
+			<p>{{r.description}}</p>
+		</div>
+		<div class="lesson-right">
+			<a href="{{r.location}}">{{r.location}}<a/>
+		</div>
+	</div>
+	{% endfor %}
+	{%for c in code%}
+	<div class="lesson">
+		<div class="lesson-left">
+			<span><h2>{{c.name}}</h2>
+			<p>{{c.description}}</p>
+		</div>
+		<div class="lesson-right" style=" background:#FFF;">
+			<code id = "code" class="prettyprint lang-php">
+				{{c.contentFirst}}
+			</code> 
+		</div>
+	</div>
+	{% endfor %}
+	{%for d in demo%}
+	<div class="lesson">
+		<div class="lesson-left">
+			<span><h2>{{d.name}}</h2>
+			<p>{{d.description}}</p>
+		</div>
+		<div class="lesson-right">
+			<a style="font-size:3em;text-decoration:underline;"href="{{d.location}}">TRY A DEMO<a/>
+		</div>
+	</div>
+	{%endfor%}
+{% endblock %}
+
+		

@@ -1,0 +1,34 @@
+<!--
+
+Student directory
+
+Page to display a list of users, and some basic information. Similar
+format to a telephone directory.
+
+Each user can be clicked upon to open a new page with more details.
+
+Author              Glasgow University 2013/14 (L3: Team P)
+Last Modified       13 Dec 2013
+-->
+
+<!-- Some Django Header Info -->
+{% extends "base.html" %}
+{% block title %}Students - {{block.super}}{%endblock%}
+{% block header %}
+    <!-- Go to login page if not logged in -->
+	{% if authenticated %}
+        <a href={% url 'logout'%}>Logout</a>
+	{% endif %}
+{% endblock %}
+
+<!-- Loop through all students -->
+{% block content %}
+	{%for student in students%}
+	<div class="student">
+        <span><h2>{{student.identity.first_name}} {{student.identity.last_name}}</h2>
+        <h3> {{student.points}} points gained</h3></span>
+        <p>{{lesson.description}}</p>
+        <a href="#">More...</a>
+	</div>
+	{% endfor %}
+{% endblock %}

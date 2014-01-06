@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<title>{% block title %}Security Learning Tool{% endblock %}</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+		{% block head %}{% endblock %}
+	</head>
+	<header>
+		<h1><a href={% url 'lessons'%}>Security Learning Tool</a></h1>
+		{% block header %}{% endblock %}
+	</header>
+	<body>
+		<div class="body-wrapper">
+			{% block content %}{% endblock %}
+			{% block extracontent %}{% endblock %}
+		</div>
+	</body>
+
+	<footer>
+		<p>&copy;University of Glasgow 2013. A Team P creation.</p>
+	</footer>
+
+</html>
