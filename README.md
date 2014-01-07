@@ -16,10 +16,10 @@ Django
 
 ### Build Instructions
 To obtain the source for the project, execute the following line in a terminal:
-    git clone https://username@bitbucket.org/guteamp/web-app.git
+	git clone https://username@bitbucket.org/guteamp/web-app.git
 
 If you are unable to access HTTPS from your system, an SSH clone can be done as follows:
-    git clone git@bitbucket.org:guteamp/web-app.git
+	git clone git@bitbucket.org:guteamp/web-app.git
 
 For information on how to setup an SSH key, visit Bitbucket's website.
 
