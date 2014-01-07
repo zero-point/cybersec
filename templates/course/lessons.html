@@ -5,22 +5,18 @@
 {% block header %}
 
 	{% if authenticated %}
-			<a href={% url 'logout'%}>Logout</a>
+			<li><a href="{% url 'logout'%}">Logout</a></li>
 	{% endif %}
 
 {% endblock %}
 
 {% block content %}
 	{%for lesson in lessons%}
-	<div class="lesson">
-		<div class="lesson-left">
-			<span><h2>{{lesson.title}}</h2><h3> {{lesson.award}} points</h3></span>
-			<p>{{lesson.description}}</p>
-			<a href="/lessons/res/?id={{lesson.pk}}">More...</a>
-		</div>
-		<div class="lesson-right">
-			<img src={{MEDIA_URL}}{{lesson.image}}></img>
-		</div>
+	<div class="col-md-12">
+		<span><h2>{{lesson.title}}</h2><h3> {{lesson.award}} points</h3></span>
+		<p>{{lesson.description}}</p>
+		<a href="/lessons/res/?id={{lesson.pk}}">More...</a>
+		<img src={{MEDIA_URL}}{{lesson.image}} style="width:100%"></img>
 	</div>
 	{% endfor %}
 {% endblock %}
