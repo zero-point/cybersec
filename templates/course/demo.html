@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Lessons - {{block.super}}{%endblock%}
+
+{% block header %}
+
+	{% if authenticated %}
+			<li><a href="{% url 'logout'%}">Logout</a></li>
+	{% endif %}
+
+{% endblock %}
+
+{% block content %}
+	<section>
+	   <!-- main demo in here please -->
+	</section>
+
+	<aside>
+		<!-- descriptive text in here please -->
+	</aside>
+{% endblock %}
+
