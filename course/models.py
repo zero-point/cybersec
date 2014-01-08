@@ -6,9 +6,10 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 ################################################################################
-# Lesson Model
+# Lessson Model
 #
-# Storing the vital details of a lesson
+# Storing details on a lesson (ie name, award, description, etc)
+# Also stores the code for the demonstrations
 class Lesson(models.Model):
 		title           = models.CharField(max_length=100)
 		image           = models.ImageField(upload_to="Lessons")
@@ -19,11 +20,16 @@ class Lesson(models.Model):
 		implementation  = models.TextField()
 		prevention      = models.TextField()
 		
-		demonstration   = models.TextField()
+		implementDemo   = models.TextField()
+		preventDemo     = models.TextField()
 
 		def __unicode__(self):
 			return u'%s' % (self.title)
 
+################################################################################
+# Student Model
+#
+# Storing details on a student (ie name, lessons completed, total points etc)
 class Student(models.Model):
 		identity = models.OneToOneField(User)
 		lessons = models.ManyToManyField(Lesson,blank=True,related_name="lessons")
