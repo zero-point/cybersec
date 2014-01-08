@@ -16,6 +16,7 @@ def lessons(request):
 @login_required
 def lesson_page(request):
     lesson = Lesson.objects.get(title = request.GET.get("title", "NULL"))
+    print(lesson.intro)
     template = loader.get_template('course/lessonpage.html')
     authenticater = request.user.is_authenticated()
     context = RequestContext(request, {'resources':lesson, 'authenticated':authenticater,})
