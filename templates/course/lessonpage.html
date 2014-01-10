@@ -40,13 +40,12 @@ $(document).ready(function(){
 });
 </script>
 {% endblock %}
-{% block title %} {{ resouces.title }} - {{block.super}}{%endblock%}
+{% block title %} {{ resources.title }} - {{block.super}}{%endblock%}
 
 {% block content %}
 	<div class="lesson" id="intro">
 		<div class="lesson-left">
 			<span><h2>Intro</h2>
-			<p></p>
 		</div>
 		<div class="lesson-right" style=" background:#FFF;">
 			{{ resources.intro }}
@@ -55,16 +54,22 @@ $(document).ready(function(){
 		<div class="lesson" id="implement">
 		<div class="lesson-left">
 			<span><h2>Implementation</h2>
-			<p>{{lesson.implementation}}</p>
 		</div>
 		<div class="lesson-right" style=" background:#FFF;">
 			{{ resources.implementation }}
 		</div>
 	</div>
+	<div class="lesson" id="implement">
+		<div class="lesson-left">
+			<span><h2>Demo #1</h2>
+		</div>
+		<div class="lesson-right" style=" background:#FFF;">
+			{{ resources.implementDemo | safe }}
+		</div>
+	</div>
 		<div class="lesson" id="prevent">
 		<div class="lesson-left">
 			<span><h2>Prevention</h2>
-			<p>{{lesson.prevention}}</p>
 		</div>
 		<div class="lesson-right" style=" background:#FFF;">
 			{{ resources.prevention }}
