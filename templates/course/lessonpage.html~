@@ -15,28 +15,9 @@
 </script>
 <script>
 $(document).ready(function(){
-    $("#intro").hide();
     $("#implement").hide();
+    $("#demo1").hide();
     $("#prevent").hide();
-    $("#nextButton1").hide();
-    $("#nextButton2").hide();
-    
-    $("#beginButton").click(function(){
-        $("#intro").fadeIn();
-        $("#beginButton").hide();
-        $("#nextButton1").fadeIn();
-    });
-    
-    $("#nextButton1").click(function(){
-        $("#implement").fadeIn();
-        $("#nextButton1").hide();
-        $("#nextButton2").fadeIn();
-    });
-    
-    $("#nextButton2").click(function(){
-        $("#prevent").fadeIn();
-        $("#nextButton2").hide();
-    });
 });
 </script>
 {% endblock %}
@@ -48,7 +29,8 @@ $(document).ready(function(){
 			<span><h2>Intro</h2>
 		</div>
 		<div class="lesson-right" style=" background:#FFF;">
-			{{ resources.intro }}
+			<p>{{ resources.intro }}</p>
+			<p><button onclick="$(this).hide(); $('#implement').fadeIn();">Click to see how we'll implement it</button></p>
 		</div>
 	</div>
 		<div class="lesson" id="implement">
@@ -56,15 +38,17 @@ $(document).ready(function(){
 			<span><h2>Implementation</h2>
 		</div>
 		<div class="lesson-right" style=" background:#FFF;">
-			{{ resources.implementation }}
+			<p>{{ resources.implementation }}</p>
+			<p><button onclick="$('#demo1').fadeIn();">Click to perform a demo</button></p>
 		</div>
 	</div>
-	<div class="lesson" id="implement">
+	<div class="lesson" id="demo1">
 		<div class="lesson-left">
-			<span><h2>Demo #1</h2>
+			<span><h2>Demo</h2>
 		</div>
 		<div class="lesson-right" style=" background:#FFF;">
-			{{ resources.implementDemo }}
+			<p>{{ resources.implementDemo | safe }}</p>
+			<p><button onclick="$('#prevent').fadeIn();">Click to see how to prevent it</button></p>
 		</div>
 	</div>
 		<div class="lesson" id="prevent">
@@ -75,10 +59,6 @@ $(document).ready(function(){
 			{{ resources.prevention }}
 		</div>
 	</div>
-	<br /><br />
-	<button id="beginButton">Click to begin lesson</button>
-    <button id="nextButton1">Click to see how we'll implement it</button>
-    <button id="nextButton2">Click to see how we'll stop it</button>
 {% endblock %}
 
 		

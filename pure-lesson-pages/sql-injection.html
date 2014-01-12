@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+<script>    
+    var db = openDatabase('BankingDB', '1.0', 'Unsecure Banking Database', 2 * 1024 * 1024);
+    var firstTime = 1;
+    
+    db.transaction(function (tx) {
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Account (id UNIQUE, password)');
+        tx.executeSql('INSERT INTO Account (id, password) VALUES (1000, "abc123")');
+        tx.executeSql('INSERT INTO Account (id, password) VALUES (1001, "password")');
+        tx.executeSql('INSERT INTO Account (id, password) VALUES (1002, "scotland")');
+        tx.executeSql('INSERT INTO Account (id, password) VALUES (1003, "alba")');
+        tx.executeSql('INSERT INTO Account (id, password) VALUES (1004, "jpmorgan")');
+        tx.executeSql('INSERT INTO Account (id, password) VALUES (1005, "bank")');
+    });
+    
+    $(document).ready(function(){
+        $("#demoSQL").hide();
+        $("#explanationOfSQL").hide();
+        $("#exploitationOfSQL").hide();
+        $("#exploitationFinished").hide();
+        
+        $("#LoginFailed").hide();
+        $("#LoginSuccess").hide();
+        
+        $("#loginButton").click(function(){
+            var accountNo = document.getElementById("account").value;
+            var password  = document.getElementById("password").value;
+            
+            // If fields are left blank, avoid null being passed.
+            if (!accountNo) {accountNo = "0";};
+            if (!password)  {password  = "0";};
+
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM Account WHERE id = ' + accountNo + ' AND password = \'' + password + '\'', [], function(tx, results) {
+                    if (results.rows.length > 0) {
+                        $("#LoginForm").hide();
+                        $("#LoginFailed").hide();
+                        
+                        if (firstTime == 1) {
+                            $("#LoginSuccess").fadeIn();
+                            firstTime = 0;
+                        } else {
+                            $("#exploitationFinished").fadeIn();
+                        }
+                    } else {
+                        $("#LoginFailed").fadeIn();
+                    }
+                });
+            });
+        });
+    });
+</script>
+<div id="introSQL">
+    <p>We have set up a local, unsecured SQL database called "BankingDB". You can see proof of this in your browser's developer tools (normally this information would be held on a server elsewhere). This database is currently storing information on customer logins for the bank's website.</p>
+    <button onclick='$("#introSQL").hide(); $("#demoSQL").fadeIn();'>Next</button>
+</div>
+<div id="explanationOfSQL">
+    <p>The form you have just completed allows you to log into our system by performing an SQL query on our database. The code for this query is as follows:</p>
+    <code>SELECT * FROM Account WHERE id = accountNo AND password = password</code>
+    <p>
+        <button onclick='$("#explanationOfSQL").hide();
+                         $("#exploitationOfSQL").fadeIn();
+                         $("#LoginFailed").hide();
+                         $("#LoginSuccess").hide();
+                         $("#demoSQLIntro").hide();
+                         $("#demoSQL").fadeIn();
+                         
+                         document.getElementById("account").value="";
+                         document.getElementById("password").value="";
+                         
+                         $("#LoginForm").fadeIn();'>Next</button>
+    </p>
+</div>
+<div id="exploitationOfSQL">
+    <p>As data is passed straight from the password box to the query, it is easy to exploit this loophole to our advantage. Using the form below, enter any number in the Account Number box, and enter the following password.</p>
+    <code>abc' OR 1=1 OR password='abc</code>
+    <p>The apostrophe after abc will terminate the password field and begin executing SQL code. 1=1 is an SQL boolean value that will always return true. We then pass back another request for a password to ensure that the server doesn't report an SQL syntax error, as this form will automatically append an apostrophe at the end of the entry.</p>
+</div>
+<div id="exploitationFinished">
+    <p>Well done - you have successfully exploited a database using SQL.</p>
+</div>
+<div id="demoSQL">
+    <p id="demoSQLIntro">Using the form below, enter the account number "1000" and password "abc123" to access this account's data.</p>
+    <div id="LoginFailed">
+        <p>Login failed - please try again.</p>
+    </div>
+    <div id="LoginForm">
+        <table>
+            <tr><td>Account Number</td><td><input type="text" id="account" /></td></tr>
+            <tr><td>Password</td><td><input type="password" id="password" /></td></tr>
+        </table>
+    <button id="loginButton">Log In</button>
+    </div>
+    <div id="LoginSuccess">
+        <p>Login successful - have a nice day.</p>
+        <br />
+        <button onclick='$("#demoSQL").hide(); $("#explanationOfSQL").fadeIn();'>Next</button>
+    </div>
+</div>
+</body>
+</html>

@@ -35,3 +35,6 @@ Execute the following line in a terminal:
 ### Default Administrator Login
 * Username is "test"
 * Password is "password"
+
+### Pure Lesson Pages
+As the source code for each of the lessons is stored an an SQLite database, I have created a directory in which to store this source code independently, should it need reviewed away from a running system.
