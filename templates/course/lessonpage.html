@@ -34,10 +34,12 @@ $(document).ready(function(){
 {% block title %} {{ resources.title }} - {{block.super}}{%endblock%}
 {% block content %}
 
+<h1> {{resources.title }} </h1>
+
 <!-- Lesson Introduction ------------------------------------------------------>
 <div class="lesson" id="intro">
     <div class="lesson-left">
-        <span><h2>Intro</h2>
+        <span><h3>Intro</h3>
     </div>
 	<div class="lesson-right" style=" background:#FFF;">
 		<p>
@@ -54,7 +56,7 @@ $(document).ready(function(){
 <!-- Details on how to implement security weakness ---------------------------->
 <div class="lesson" id="implement">
     <div class="lesson-left">
-		<span><h2>Implementation</h2>
+		<span><h3>Implementation</h3>
 	</div>
 	<div class="lesson-right" style=" background:#FFF;">
 		<p>
@@ -71,7 +73,7 @@ $(document).ready(function(){
 <!-- Placeholder for the implementation demonstration ------------------------->
 <div class="lesson" id="demo1">
 	<div class="lesson-left">
-		<span><h2>Demo</h2>
+		<span><h3>Demo</h3>
 	</div>
 	<div class="lesson-right" style=" background:#FFF;">
 	    <p id="demoHolder">
@@ -88,7 +90,7 @@ $(document).ready(function(){
 <!-- How to prevent this security weakness ------------------------------------>
 <div class="lesson" id="prevent">
 	<div class="lesson-left">
-		<span><h2>Prevention</h2>
+		<span><h3>Prevention</h3>
 	</div>
 	<div class="lesson-right" style=" background:#FFF;">
 	    <p>
