@@ -61,7 +61,7 @@ $(document).ready(function(){
 		    {{ resources.implementation }}
 		</p>
 		<p>
-		    <button onclick="$(this).hide(); $('#demo1').fadeIn();">
+		    <button onclick="$(this).hide(); $('#implementDemoComplete').hide(); $('#demo1').fadeIn();">
 		        Click to perform a demo
 		    </button>
 		</p>
@@ -93,6 +93,11 @@ $(document).ready(function(){
 	<div class="lesson-right" style=" background:#FFF;">
 	    <p>
 		    {{ resources.prevention }}
+		</p>
+		<p>
+		    <button>
+		        Collect points for this lesson
+		    </button>
 		</p>
 	</div>
 </div>
