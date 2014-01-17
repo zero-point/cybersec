@@ -53,3 +53,5 @@ class Resource(models.Model):
 class PictureResource(Resource):
 		location = models.ImageField(upload_to="Resources")
 
+class WebResource(Resource):
+        location = models.URLField()

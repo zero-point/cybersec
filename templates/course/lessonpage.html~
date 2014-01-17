@@ -18,6 +18,9 @@ $(document).ready(function(){
     $("#implement").hide();
     $("#demo1").hide();
     $("#prevent").hide();
+    
+    $("#demoHolder").load("{{ resources.implementDemo }}");
+    alert("{{ resources.implementDemo }}");
 });
 </script>
 {% endblock %}
@@ -39,7 +42,7 @@ $(document).ready(function(){
 		</div>
 		<div class="lesson-right" style=" background:#FFF;">
 			<p>{{ resources.implementation }}</p>
-			<p><button onclick="$('#demo1').fadeIn();">Click to perform a demo</button></p>
+			<p><button onclick="$(this).hide(); $('#demo1').fadeIn();">Click to perform a demo</button></p>
 		</div>
 	</div>
 	<div class="lesson" id="demo1">
@@ -47,8 +50,8 @@ $(document).ready(function(){
 			<span><h2>Demo</h2>
 		</div>
 		<div class="lesson-right" style=" background:#FFF;">
-			<p>{{ resources.implementDemo | safe }}</p>
-			<p><button onclick="$('#prevent').fadeIn();">Click to see how to prevent it</button></p>
+		    <p id="demoHolder"></p>
+			<p><button onclick="$(this).hide(); $('#prevent').fadeIn();">Click to see how to prevent it</button></p>
 		</div>
 	</div>
 		<div class="lesson" id="prevent">
