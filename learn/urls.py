@@ -1,3 +1,17 @@
+#!/usr/bin/env python
+
+"""
+urls.py
+
+Parsing URLs from user requests
+
+"""
+
+__author__      = "Arnas Binkauskas, Donald Martin, Josh McGhee & Irina Preda"
+__copyright__   = "Copyright 2014, University of Glasgow, Team P"
+__version__     = "1.0"
+__status__      = "Development"
+
 from django.conf.urls import patterns, include, url
 from course import views
 from django.contrib import admin
@@ -9,10 +23,6 @@ from django.views.generic import RedirectView
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'learn.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
     url(r'^lessons/', include('course.urls')),
     url(r'^student/', include('student.urls')),

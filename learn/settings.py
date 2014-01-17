@@ -1,38 +1,39 @@
+#!/usr/bin/env python
+
 """
-Django settings for learn project.
+settings.py
 
-For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
+Critical settings for Django.
+Further information @ docs.djangoproject.com
 
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+__author__      = "Arnas Binkauskas, Donald Martin, Josh McGhee & Irina Preda"
+__copyright__   = "Copyright 2014, University of Glasgow, Team P"
+__version__     = "1.0"
+__status__      = "Development"
+
+# Operating System -------------------------------------------------------------
+
 import os
+BASE_DIR        = os.path.dirname(os.path.dirname(__file__))
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+# Security Options -------------------------------------------------------------
 
+SECRET_KEY      = ')=xths&sz@l5b=bad1scqy1y#el8i0_-y78ei%x!g5-!08bil1'
+DEBUG           = True
+TEMPLATE_DEBUG  = True
+TEMPLATE_DIRS   = (os.path.join(BASE_DIR, "templates"),)
+ALLOWED_HOSTS   = []
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
+# Location of Media Files ------------------------------------------------------
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')=xths&sz@l5b=bad1scqy1y#el8i0_-y78ei%x!g5-!08bil1'
+MEDIA_ROOT      = os.path.join(BASE_DIR, "media")
+MEDIA_URL       = '/media/'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Installed Applications -------------------------------------------------------
 
-TEMPLATE_DEBUG = True
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, "templates"),)
-ALLOWED_HOSTS = []
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-MEDIA_URL = '/media/'
-# Application definition
-
-INSTALLED_APPS = (
+INSTALLED_APPS  = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,24 +52,18 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'learn.urls'
+ROOT_URLCONF        = 'learn.urls'
+WSGI_APPLICATION    = 'learn.wsgi.application'
 
-WSGI_APPLICATION = 'learn.wsgi.application'
+# Store Static URLs ------------------------------------------------------------
 
+STATIC_ROOT         = os.path.join(BASE_DIR, 'static')
+STATIC_URL          = '/static/'
+STATICFILES_DIRS    = (os.path.join(BASE_DIR, 'staticfiles'),)
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+LOGIN_URL           = '/lessons/login'
 
-STATIC_URL = '/static/'
-
-LOGIN_URL='/lessons/login'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'staticfiles'),
-)
-
-# Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
+# Set Default Database to SQLite3 ----------------------------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -76,21 +71,10 @@ DATABASES = {
     }
 }
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.6/topics/i18n/
+# Internationalisation Options -------------------------------------------------
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
-
-STATIC_URL = '/static/'
+LANGUAGE_CODE   = 'en-us'
+TIME_ZONE       = 'UTC'
+USE_I18N        = True
+USE_L10N        = True
+USE_TZ          = True
