@@ -1,18 +1,25 @@
 {% extends "base.html" %}
-
 {% block head %}
-<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js">
+</script>
+
 <script type="text/javascript">
     window.onload = function () {
-        var p_elements = document.getElementById('code').getElementsByTagName('code');
+        var p_elements  = document.getElementById('code').getElementsByTagName('code');
         var unixNewLine = new RegExp("\n", "g");
+        
         for (var i = p_elements.length - 1; i >= 0; i--) {
             p_elements[i].innerHTML = p_elements[i].innerHTML.replace(unixNewLine, '<br/>');
         }
     }
 </script>
+
+<!-- Load jQuery from Google's servers ---------------------------------------->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
 </script>
+
+<!-- Hide modules before the user has progressed successfully ----------------->
 <script>
 $(document).ready(function(){
     $("#implement").hide();
@@ -20,48 +27,74 @@ $(document).ready(function(){
     $("#prevent").hide();
     
     $("#demoHolder").load("{{MEDIA_URL}}{{ resources.implementDemo }}");
-    alert("{{ resources.implementDemo }}");
 });
 </script>
+
 {% endblock %}
 {% block title %} {{ resources.title }} - {{block.super}}{%endblock%}
-
 {% block content %}
-	<div class="lesson" id="intro">
-		<div class="lesson-left">
-			<span><h2>Intro</h2>
-		</div>
-		<div class="lesson-right" style=" background:#FFF;">
-			<p>{{ resources.intro }}</p>
-			<p><button onclick="$(this).hide(); $('#implement').fadeIn();">Click to see how we'll implement it</button></p>
-		</div>
-	</div>
-		<div class="lesson" id="implement">
-		<div class="lesson-left">
-			<span><h2>Implementation</h2>
-		</div>
-		<div class="lesson-right" style=" background:#FFF;">
-			<p>{{ resources.implementation }}</p>
-			<p><button onclick="$(this).hide(); $('#demo1').fadeIn();">Click to perform a demo</button></p>
-		</div>
-	</div>
-	<div class="lesson" id="demo1">
-		<div class="lesson-left">
-			<span><h2>Demo</h2>
-		</div>
-		<div class="lesson-right" style=" background:#FFF;">
-		    <p id="demoHolder"></p>
-			<p><button onclick="$(this).hide(); $('#prevent').fadeIn();">Click to see how to prevent it</button></p>
-		</div>
-	</div>
-		<div class="lesson" id="prevent">
-		<div class="lesson-left">
-			<span><h2>Prevention</h2>
-		</div>
-		<div class="lesson-right" style=" background:#FFF;">
-			{{ resources.prevention }}
-		</div>
-	</div>
-{% endblock %}
 
-		
+<!-- Lesson Introduction ------------------------------------------------------>
+<div class="lesson" id="intro">
+    <div class="lesson-left">
+        <span><h2>Intro</h2>
+    </div>
+	<div class="lesson-right" style=" background:#FFF;">
+		<p>
+		    {{ resources.intro }}
+		</p>
+		<p>
+		    <button onclick="$(this).hide(); $('#implement').fadeIn();">
+		        Click to see how we'll implement it
+		    </button>
+	    </p>
+	</div>
+</div>
+
+<!-- Details on how to implement security weakness ---------------------------->
+<div class="lesson" id="implement">
+    <div class="lesson-left">
+		<span><h2>Implementation</h2>
+	</div>
+	<div class="lesson-right" style=" background:#FFF;">
+		<p>
+		    {{ resources.implementation }}
+		</p>
+		<p>
+		    <button onclick="$(this).hide(); $('#implementDemoComplete').hide(); $('#demo1').fadeIn();">
+		        Click to perform a demo
+		    </button>
+		</p>
+	</div>
+</div>
+
+<!-- Placeholder for the implementation demonstration ------------------------->
+<div class="lesson" id="demo1">
+	<div class="lesson-left">
+		<span><h2>Demo</h2>
+	</div>
+	<div class="lesson-right" style=" background:#FFF;">
+	    <p id="demoHolder">
+	    </p>
+		<p>
+		    <button id="implementDemoComplete"
+		            onclick="$(this).hide(); $('#prevent').fadeIn();">
+		        Click to see how to prevent it
+		    </button>
+		</p>
+	</div>
+</div>
+
+<!-- How to prevent this security weakness ------------------------------------>
+<div class="lesson" id="prevent">
+	<div class="lesson-left">
+		<span><h2>Prevention</h2>
+	</div>
+	<div class="lesson-right" style=" background:#FFF;">
+	    <p>
+		    {{ resources.prevention }}
+		</p>
+	</div>
+</div>
+
+{% endblock %}

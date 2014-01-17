@@ -1,22 +1,29 @@
 {% extends "base.html" %}
-
 {% block title %}Lessons - {{block.super}}{%endblock%}
-
 {% block header %}
-
 	{% if authenticated %}
 			<li><a href="{% url 'logout'%}">Logout</a></li>
 	{% endif %}
-
 {% endblock %}
 
 {% block content %}
 	{%for lesson in lessons%}
-	<div class="col-md-12">
-		<span><h2>{{lesson.title}}</h2><h3> {{lesson.award}} points</h3></span>
-		<p>{{lesson.description}}</p>
-		<a href="/lessons/res/?title={{lesson.title}}">Click here to continue</a>
-		<img src={{MEDIA_URL}}{{lesson.image}} style="width:100%"></img>
+	<div class="row">
+	    <div class="col-xs-12 col-sm-6 col-md-8">
+	        <h2>{{lesson.title}}</h2>
+		    <h4><i>{{lesson.award}} points</i></h4>
+		    <p>{{lesson.description}}</p>
+		    <p>
+		        <button onclick="window.location.href='/lessons/res/?title={{lesson.title}}'">
+		            Take this lesson
+		        </button>
+		    </p>
+	    </div>
+	    <div class="col-xs-6 col-md-4">
+	        <img src={{MEDIA_URL}}{{lesson.image}} style="width:100%" />
+	    </div>
 	</div>
+	<br />
+	<br />
 	{% endfor %}
 {% endblock %}
