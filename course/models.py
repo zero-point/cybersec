@@ -1,15 +1,24 @@
 #!/usr/bin/env python
 
+"""
+models.py
+
+Creating model classes to store lessons, students, website resources, etc...
+
+"""
+
+__author__      = "Arnas Binkauskas, Donald Martin, Josh McGhee & Irina Preda"
+__copyright__   = "Copyright 2014, University of Glasgow, Team P"
+__version__     = "1.0"
+__status__      = "Development"
+
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
-################################################################################
-# Lessson Model
+# Lesson Model -----------------------------------------------------------------
 #
-# Storing details on a lesson (ie name, award, description, etc)
-# Also stores the code for the demonstrations
+# Storing a lesson's name, logo, award & links to required resources
+
 class Lesson(models.Model):
 		title           = models.CharField(max_length=100)
 		image           = models.ImageField(upload_to="Lessons")
@@ -26,32 +35,45 @@ class Lesson(models.Model):
 		def __unicode__(self):
 			return u'%s' % (self.title)
 
-################################################################################
-# Student Model
+
+# Student Model ----------------------------------------------------------------
 #
-# Storing details on a student (ie name, lessons completed, total points etc)
+# Storing a student's details, how many lessons completed & total points gained
+
 class Student(models.Model):
-		identity = models.OneToOneField(User)
-		lessons = models.ManyToManyField(Lesson,blank=True,related_name="lessons")
-		completed = models.ManyToManyField(Lesson,blank=True,related_name="completed")
-		points = models.IntegerField(default=0,editable=False)
+		identity    = models.OneToOneField(User)
+		lessons     = models.ManyToManyField(Lesson,blank=True,related_name="lessons")
+		completed   = models.ManyToManyField(Lesson,blank=True,related_name="completed")
+		points      = models.IntegerField(default=0,editable=False)
 
 		def __unicode__(self):
 			return u'%s %s' % (self.identity.first_name,self.identity.last_name)
 
+# Resource Model ---------------------------------------------------------------
+#
+# Storing website resources, such as links to projects
+
 class Resource(models.Model):
-		name = models.CharField(max_length=100)
+		name        = models.CharField(max_length=100)
 		description = models.TextField()
-		parent = models.ForeignKey(Lesson)
+		parent      = models.ForeignKey(Lesson)
 
 		def __unicode__(self):
 			return u'%s for %s lesson' % (self.name, self.parent.title)
 
 		class Meta:
 			abstract = True;
+			
+# Picture Resource -------------------------------------------------------------
+#
+# Subset of resource to store website images.
 
 class PictureResource(Resource):
 		location = models.ImageField(upload_to="Resources")
+
+# Web Resource -----------------------------------------------------------------
+#
+# Subset of resource to store links to other websites.
 
 class WebResource(Resource):
         location = models.URLField()
