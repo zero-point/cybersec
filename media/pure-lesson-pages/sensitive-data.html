@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+Sensitive Data Demo
+
+A demonstration of encryption methods and how visible incorrectly-transmitted data can be to the outside world.
+
+Author              Joshua McGhee (for Team P, University of Glasgow)
+Last Modified       14 January 2014
+-->
+<body>
+
+<!-- Import some animations from jQuery-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+
+<script>
+    // Create the database, and record that this is the first time page viewed.
+    var db = openDatabase('BankDB', '1.0', 'Unsecure Database', 2 * 1024 * 1024);
+    var firstTime = 1;
+    
+    // Populate the database with some random data.
+    db.transaction(function (tx) {
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Account (id UNIQUE, password)');
+        tx.executeSql('INSERT INTO Account (id, password) VALUES (1000, "abc123")');
+        tx.executeSql('INSERT INTO Account (id, password) VALUES (1001, "password")');
+        tx.executeSql('INSERT INTO Account (id, password) VALUES (1002, "scotland")');
+    });
+    
+    $(document).ready(function(){
+        // Hide these sections until the user has progressed accordingly.
+        $("#demoData").hide();
+        $("#explanationOfData").hide();
+        $("#exploitationOfData").hide();
+        $("#exploitationFinished").hide();
+        $("#LoginFailed").hide();
+        $("#LoginSuccess").hide();
+        
+        $("#loginButton").click(function(){
+            // Get the form's data.
+            var accountNo = document.getElementById("account").value;
+            var password  = document.getElementById("password").value;
+            
+            // If fields are left blank, avoid null being passed.
+            if (!accountNo) {accountNo = "0";};
+            if (!password)  {password  = "0";};
+
+            db.transaction(function (tx) {
+                // Run SQL code and generate result.
+                tx.executeSql('SELECT * FROM Account WHERE id = ' + accountNo +
+                ' AND password = \'' + password + '\'', [], function(tx, results) {
+                    if (results.rows.length > 0) {
+                        $("#LoginForm").hide();
+                        $("#LoginFailed").hide();
+                        
+                        if (firstTime == 1) {
+                            $("#LoginSuccess").fadeIn();
+                            firstTime = 0;
+                        } else {
+                            $("#exploitationFinished").fadeIn();
+                        }
+                    } else {
+                        $("#LoginFailed").fadeIn();
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Demo Introduction ------------------------------------------------------ -->
+<div id="introData">
+    <p>There are serious security implications that come with data handled within web applications. Clear-text communication, weak encryption algorithms and an absence of a salt from hashed values can result in confidential information making its way into the hands of a malicious party. This demonstration is indended to explain basic practices around safely transmitting data an encryption algorithms.</p>
+    <p>
+        <button onclick='$("#introData").hide(); $("#demoData").fadeIn();'>Next</button>
+    </p>
+</div>
+
+<!-- Demo Explanation ------------------------------------------------------- -->
+<div id="explanationOfData">
+    <p>The form you have just completed allows you to log into our system by
+    performing an SQL query on our database. The code for this query is as
+    follows:</p>
+    <p>
+        <code>
+            SELECT * FROM Account WHERE id = accountNo AND password = password
+        </code>
+    </p>
+    <p>
+        <button onclick='$("#explanationOfData").hide();
+                         $("#exploitationOfData").fadeIn();
+                         $("#LoginFailed").hide();
+                         $("#LoginSuccess").hide();
+                         $("#demoDataIntro").hide();
+                         $("#demoData").fadeIn();
+                         
+                         document.getElementById("password").value="";
+                         
+                         $("#LoginForm").fadeIn();'>Next</button>
+    </p>
+</div>
+
+<!-- How to exploit the system ------------------------------------------------>
+<div id="exploitationOfData">
+    <p>As data is passed straight from the password box to the query, it is easy
+    to exploit this loophole to our advantage. Using the form below, enter any
+    number in the Account Number box, and enter the following password.</p>
+    <p>
+        <code>
+            abc' OR 1=1 OR password='abc
+        </code>
+    </p>
+    <p>The apostrophe after abc will terminate the password field and begin
+    executing SQL code. 1=1 is an SQL boolean value that will always return
+    true. We then pass back another request for a password to ensure that the
+    server doesn't report an SQL syntax error, as this form will automatically
+    append an apostrophe at the end of the entry.</p>
+</div>
+
+<!-- Completion Message ------------------------------------------------------->
+<div id="exploitationFinished">
+    <p>Well done - you have successfully exploited a database using SQL.</p>
+</div>
+
+<!-- The Almighty Demo -------------------------------------------------------->
+<div id="demoData">
+    <!-- Demo Introduction -->
+    <p id="demoDataIntro">Enter anything at all into the password box below. We are going to simulate sending it to a server using a standard HTTP GET request from an HTML5 form.</p>
+    <code>
+        <![CDATA[
+            <form action="sensitive-data-continuance.html" method="get">  
+            <p>Password</p>
+            <input type="password" id="password" name = "pass" />
+            <input type="submit" />
+        </form>
+        ]]>
+    </code>
+    
+    <!-- Login Form -->
+    <div id="LoginForm">
+    <form action="sensitive-data-continuance.html" method="get">  
+        <p>Password</p>
+        <input type="password" id="password" name = "pass" />
+        <input type="submit" />
+    </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+Sensitive Data Demo Continuance
+
+A demonstration of encryption methods and how visible incorrectly-transmitted data can be to the outside world.
+
+Author              Joshua McGhee (for Team P, University of Glasgow)
+Last Modified       14 January 2014
+-->
+<body>
+
+<!-- Import some animations from jQuery-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+<script src="aes.js">
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // Hide these sections until the user has progressed accordingly.
+        $("#encrypt").hide();
+    });
+</script>
+
+<div id="continueData">
+    <p>As you can see in the address bar of your browser, despite our use of a password form, your password is now clearly visible to anyone able to intercept the request. Let's hope you don't use that for anything important! In order to avoid this eventuality we can use a different variety of HTTP request, the POST request, to remove your password from your address bar and implement HTTPS in order to protect the data during transmission.</p>
+    <p>
+        <button onclick='$("#continueData").hide(); $("#encrypt").fadeIn();'>Next</button>
+    </p>
+</div>
+<div id="encrypt">
+    <p>Strong encryption, such as that provided by HTTPS, is a powerful tool in protecting sensitive data within and outwith your application. Consider what you learned in the SQL Injection lesson (if you haven't, get over there!) and imagine that you are responsible for providing the database but not the interfce to query it. If someone managed to extract sensitive passwords with no encryption they would look something like this:</p>
+    <p>Fido sheila1982 HaX0r5</p>
+    <p>Or when encrypted:</p>
+    <p id="enctext"></p>
+    <script type="text/javascript">
+    	var div = document.getElementById("enctext");
+    	div.textContent = CryptoJS.AES.encrypt("Fido", "3hdm49DJ93Jjfh4fSf") + " " + CryptoJS.AES.encrypt("sheila1982", "3hdm4ffjwie3h4fSf") + " " +CryptoJS.AES.encrypt("HaX0r5", "biufw939hfbiGiT4fSf");
+   		var text = div.textContent;
+    </script>
+    <P>The advantages of taking this precaution are clear, even if you think the data is perfectly safe. For any networked application, it is sensible to assume that your data is never safe.</p>
+    <p>
+        <button onclick='$("#encrypt").hide(); $("#demoData").fadeIn();'>Next</button>
+    </p>
+</div>
+</body>
+</html>
