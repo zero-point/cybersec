@@ -1,0 +1,72 @@
+<html>
+<body>
+<!---
+Direct Access to Insecure Objects Demo
+
+Author          Donald Martin (for Team P, University of Glasgow)
+Last Modified   19 January 204
+-->
+<script>
+    
+    var transactions = [
+                        [1000, "01-Jan-14 09:52", 15, "Crusty Cream Doughnuts"],
+                        [1000, "01-Jan-14 12:14", 07, "Megacoach Travel Tickets"],
+                        [1001, "01-Jan-14 15:34", 99, "SUUS Loan Payment"],
+                        [1000, "01-Jan-14 18:43", 63, "Bank Transfer"],
+                        [1001, "01-Jan-14 21:49", 24, "McRonald's Fast Food"],
+                        
+                        [1001, "02-Jan-14 10:27", 11, "jTunes Music Purchase"],
+                        [1000, "02-Jan-14 13:40", 01, "SPD Underground Travel"],
+                        [1001, "02-Jan-14 16:09", 16, "OSDA Supermarket"],
+                        [1000, "02-Jan-14 19:29", 35, "McRonald's Fast Food"],
+                        [1001, "02-Jan-14 22:03", 58, "Megacoach Travel Tickets"],
+                        
+                        [1000, "03-Jan-14 09:48", 99, "SUUS Loan Payment"],
+                        [1001, "03-Jan-14 12:54", 05, "Bank Transfer"],
+                        [1000, "03-Jan-14 15:12", 33, "Crusty Cream Doughnuts"],
+                        [1001, "03-Jan-14 18:30", 11, "Bank Transfer"],
+                        [1000, "03-Jan-14 21:36", 09, "Crusty Cream Doughnuts"],
+                        
+                        [1001, "04-Jan-14 08:30", 12, "OSDA Supermarket"],
+                        [1000, "04-Jan-14 11:11", 11, "SPD Underground Travel"],
+                        [1001, "04-Jan-14 14:43", 19, "McRonald's Fast Food"],
+                        [1000, "04-Jan-14 17:49", 01, "jTunes Music Purchase"]
+                       ];
+                       
+    function updateTable() {
+        var address = document.getElementById('addrBar').value;
+        var n       = address.search("account") + 8;
+        
+        if (n == 8) {
+            alert("Fail");
+        } else {
+            var results = "<table>";
+    
+            for (var i=0; i < transactions.length; i++) {
+                var row = transactions[i];
+            
+                if (row[0] == parseInt(address.substring(n))) {
+                    results += "<tr>";
+            
+                    for (var j = 0; j < row.length; j++) {
+                        if (j == 2) {results += "<td>" + "&pound;" + row[j] + "</td>";}
+                        else {results += "<td>" + row[j] + "</td>";}
+                    }
+
+                    results += "</tr>";
+                }
+            }
+     
+            document.getElementById("tableHolder").innerHTML = results;
+        }
+    }
+</script>
+
+<div id="addressBarHolder">
+    <input id="addrBar" type="text" value="www.securebank.com/statement?account=1000" />
+    <button onclick="updateTable()">Go</button>
+</div>
+
+<div id="tableHolder" />
+</body>
+</html>
