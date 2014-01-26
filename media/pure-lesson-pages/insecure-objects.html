@@ -6,7 +6,15 @@ Direct Access to Insecure Objects Demo
 Author          Donald Martin (for Team P, University of Glasgow)
 Last Modified   19 January 204
 -->
+<!-- Import some animations from jQuery-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+
 <script>
+$(document).ready(function(){
+    $("#briefIntro2").hide();
+    $("#briefIntro3").hide();
+    });
     
     var transactions = [
                         [1000, "01-Jan-14 09:52", 15, "Crusty Cream Doughnuts"],
@@ -62,8 +70,58 @@ Last Modified   19 January 204
     }
 </script>
 
+<div id="briefIntro1">
+    <p>
+        Using the address bar below, we can see that a mention is made to the
+        user's account number, in this case 1000. This would imply that the
+        variable "account" holds the users account number, and is passed to the
+        backend via the URL.
+    </p>
+    <p>
+        <button onclick='$("#briefIntro1").hide(); $("#briefIntro2").fadeIn();'>
+            Next
+        </button>
+    </p>
+</div>
+
+<div id="briefIntro2">
+    <p>
+        While this is an easy system to implement, it also leaves the system
+        open to unauthorised access.
+    </p>
+    <p>
+        The system set up below has 2 users in it, for demonstration purposes:
+        1000 and 1001. Try changing the account number from 1000 to 1001.
+    </p>
+    <p>
+        <button onclick='$("#briefIntro2").hide(); $("#briefIntro3").fadeIn();'>
+            Next
+        </button>
+    </p>
+</div>
+
+<div id="briefIntro3">
+    <p>
+        As you can see, the system will automatically pass 1001 to the backend,
+        and the backend will pass back the user's statement for that account number.
+    </p>
+    <p>
+        This is permitted, as the system performs no further checks on the user's
+        validity. After login, the system will assume that the user will only
+        access their own data.
+    </p>
+    <p>
+        Click next to find out about how this vulnerability can be prevented.
+    </p>
+    <p>
+        <button onclick='$('#implementDemoComplete').fadeIn();'>
+            Next
+        </button>
+    </p>
+</div>
+
 <div id="addressBarHolder">
-    <input id="addrBar" type="text" value="www.securebank.com/statement?account=1000" />
+    <input id="addrBar" type="text" style="width:300px" value="www.securebank.com/statement?account=1000" />
     <button onclick="updateTable()">Go</button>
 </div>
 
