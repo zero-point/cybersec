@@ -77,6 +77,27 @@ Last Modified       12 January 2014
     information would be held on a server elsewhere). This database is currently
     storing information on customer logins for the bank's website.</p>
     <p>
+    The database is as follows:
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>id</th><th>password</th>
+            </tr>
+            <tr>
+                <td>1000</td><td>abc123</td>
+            </tr>
+            <tr>
+                <td>1001</td><td>password</td>
+            </tr>
+            <tr>
+                <td>1002</td><td>scotland</td>
+            </tr>
+        </table>
+    </p>
+    <p>
+    Alternatively, you can visit the developer tools of your browser to see this
+    database stored on your system.
+    </p>
+    <p>
         <button onclick='$("#introSQL").hide(); $("#demoSQL").fadeIn();'>Next</button>
     </p>
 </div>
@@ -90,6 +111,27 @@ Last Modified       12 January 2014
         <code>
             SELECT * FROM Account WHERE id = accountNo AND password = password
         </code>
+    </p>
+    <p>
+    This query selects all records from the database that contain a username of
+    "1000", and a password of "abc123". As there is at least one row that fulfills
+    this criteria, the website's scripting allows you to log in.
+    </p>
+    <p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>id</th><th>password</th>
+            </tr>
+            <tr>
+                <td style="background-color:Aquamarine">1000</td><td style="background-color:Aquamarine">abc123</td>
+            </tr>
+            <tr>
+                <td>1001</td><td>password</td>
+            </tr>
+            <tr>
+                <td>1002</td><td>scotland</td>
+            </tr>
+        </table>
     </p>
     <p>
         <button onclick='$("#explanationOfSQL").hide();
@@ -125,6 +167,35 @@ Last Modified       12 January 2014
 
 <!-- Completion Message ------------------------------------------------------->
 <div id="exploitationFinished">
+    <p>
+    This input will execute the following SQL command:
+    </p>
+    <p>
+        <code>
+            SELECT * FROM Account WHERE id = accountNo AND password = abc' OR 1=1
+            OR password='abc'
+        </code>
+    </p>
+    <p>
+    As the SQL statement will exeute 1=1 (which is always true), you will receive
+    all of the records in the database.
+    </p>
+    <p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>id</th><th>password</th>
+            </tr>
+            <tr>
+                <td style="background-color:Aquamarine">1000</td><td style="background-color:Aquamarine">abc123</td>
+            </tr>
+            <tr>
+                <td style="background-color:Aquamarine">1001</td><td style="background-color:Aquamarine">password</td>
+            </tr>
+            <tr>
+                <td style="background-color:Aquamarine">1002</td><td style="background-color:Aquamarine">scotland</td>
+            </tr>
+        </table>
+    </p>
     <p>Well done - you have successfully exploited a database using SQL.</p>
 </div>
 
