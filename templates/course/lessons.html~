@@ -7,21 +7,34 @@
 {% endblock %}
 
 {% block content %}
+
+    <h1>
+        <strong>Lessons</strong>
+        <br />
+        <small>Pick a lesson to continue</small>
+    </h1>
+
 	{%for lesson in lessons%}
 	<div class="row">
 	    <div class="col-xs-12 col-sm-6 col-md-8">
-	        <h2>{{lesson.title}}</h2>
-		    <h4><i>{{lesson.award}} points</i></h4>
+	        <h3>
+	            {{lesson.title}}
+	            <br />
+	            <small><span class="glyphicon glyphicon-tags" /> {{lesson.award}}</small>
+	        </h3>
 		    <p>{{lesson.description}}</p>
 		    <p>
-		        <button onclick="window.location.href='/lessons/res/?title={{lesson.title}}'">
-		            Take this lesson
+		        <button class="btn btn-primary" onclick="window.location.href='/lessons/res/?title={{lesson.title}}'">
+		            <span class="glyphicon glyphicon-play-circle" /> Take this lesson
 		        </button>
 		    </p>
 	    </div>
 	    <div class="col-xs-6 col-md-4">
-	        <img src={{MEDIA_URL}}{{lesson.image}} style="width:100%" />
+	        <img class="img-thumbnail" src={{MEDIA_URL}}{{lesson.image}} style="width:100%" />
 	    </div>
 	</div>
+	<br />
+	<hr />
+	<br />
 	{% endfor %}
 {% endblock %}
