@@ -2697,6 +2697,10 @@ input[type="button"].btn-block {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.white {
+  color: #fff;
+}
+
 .glyphicon:empty {
   width: 1em;
 }
@@ -4569,7 +4573,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 @media (min-width: 768px) {
   .navbar-nav {
-    float: left;
+    float: right;
     margin: 0;
   }
   .navbar-nav > li {
