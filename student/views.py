@@ -30,10 +30,10 @@ def students(request):
 
 @login_required
 def student_profile(request):
-	allRelevantRes  = User.objects.filter(id = request.user.id)[0] #Removes pointless array surrounding user dictionary
+	allRelevantRes  = Student.objects.filter(identity = request.user)[0] #Removes pointless array surrounding student dictionary
 	template        = loader.get_template('student/profile.html')
 	authenticater   = request.user.is_authenticated()
-	context         = RequestContext(request, {'res': allRelevantRes, 'authenticated':authenticater,})
+	context         = RequestContext(request, {'res': allRelevantRes})
 	
 	return HttpResponse(template.render(context))
 
