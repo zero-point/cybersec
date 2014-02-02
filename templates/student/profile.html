@@ -13,44 +13,17 @@
 </script>
 {% endblock %}
 
-{% block title %} - {{block.super}}{%endblock%}
+{% block title %} {{res.first_name}} {{res.last_name}} - {{block.super}}{%endblock%}
 
 {% block content %}
-		{%for r in res%}
+
 	<div class="lesson">
 		<div class="lesson-left">
-			<span><h2>{{r.name}}</h2>
-			<p>{{r.description}}</p>
-		</div>
-		<div class="lesson-right">
-			<a href="{{r.location}}">{{r.location}}<a/>
+			<span><h2>{{res.first_name}} {{res.last_name}}</h2>
+			<p></p>
 		</div>
 	</div>
-	{% endfor %}
-	{%for c in code%}
-	<div class="lesson">
-		<div class="lesson-left">
-			<span><h2>{{c.name}}</h2>
-			<p>{{c.description}}</p>
-		</div>
-		<div class="lesson-right" style=" background:#FFF;">
-			<code id = "code" class="prettyprint lang-php">
-				{{c.contentFirst}}
-			</code> 
-		</div>
-	</div>
-	{% endfor %}
-	{%for d in demo%}
-	<div class="lesson">
-		<div class="lesson-left">
-			<span><h2>{{d.name}}</h2>
-			<p>{{d.description}}</p>
-		</div>
-		<div class="lesson-right">
-			<a style="font-size:3em;text-decoration:underline;"href="{{d.location}}">TRY A DEMO<a/>
-		</div>
-	</div>
-	{%endfor%}
+
 {% endblock %}
 
 		
