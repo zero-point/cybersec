@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<!--
+
+Cross Request Forgery (CSRF) Demo
+
+
+
+A demonstration on how Cross Site Request Forgery inserts malicious script code as parameter value into an internet application.
+
+
+
+Author              Irina Preda (for Team P, University of Glasgow)
+
+Last Modified       23 January 2014
+
+-->
+
+<body>
+
+
+
+<!-- Import some animations from jQuery-->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+
+</script>
+
+
+
+<script> 
+
+    $(document).ready(function(){
+
+        // Hide these sections until the user has progressed accordingly.
+
+        $("#demoCSFR").hide();
+
+        $("#explanationOfCSFR").hide();
+
+        $("#exploitationOfCSFR").hide();
+
+        $("#exploitationFinished").hide();
+
+	$("#Done").click(function()
+		{$("#exploitationFinished").hide();$('#implementDemoComplete').fadeIn();});
+
+    });
+
+</script>
+
+
+
+<!-- Demo Introduction -------------------------------------------------------->
+
+<div id="introCSFR">
+
+    <p>Let's say the application allows a user to submit a state changing request that does not include anything secret. For example:</p>
+
+	<p><code>http://example.com/app/transferFunds?amount=1500&destinationAccount=4673243243</code></p>
+
+	<p>
+	So, the attacker constructs a request that will transfer money from the victim’s account to the attacker’s account, and then embeds this attack in an image request or iframe stored on various sites under the attacker’s control:
+	</p>
+
+	<p><code>&lt;img src="http://example.com/app/transferFunds?amount=1500&destinationAccount=attackersAcct#" width="0" height="0" /></code></p>
+
+	<p>If the victim visits any of the attacker’s sites while already authenticated to example.com, these forged requests will automatically include the user’s session info, authorizing the attacker’s request.</p>
+
+    <p>
+
+        <button onclick='$("#introCSFR").hide(); $("#demoCSFR").fadeIn();' id="Done">Next</button>
+
+    </p>
+
+</div>
+
+
+
+<!-- The Demo ------------------------------------------------------------->
+
+<div id="demoCSFR">
+
+    <p>As described above, in order for a CSRF attack to be performed, the user must be authenticated with the target website. Assuming the victim is authenticated, the attacker can include a link or script in a third-party website that the victim visits. Thus, when the victim visits that website or link, the rogue script will be executed without the victim being aware of it. For instance, in a chat forum, an attacker posts a message which contains an image tag or an HTML image element. However, the source of the image contains a link which performs an action on a victim’s bank website account. So, instead of an image file the attacker has included a link that performs a bank transaction. </p>
+
+<p><code>
+&lt;a href="http://bank.com/transfer.do?acct=BOB&amount=100000">pic&lt;/a> <br/>
+</code></p>
+
+<p>The above is a CSRF attack using an HTTP GET request. There is a prevention method that would allow only HTTP POST requests, in order to prevent the above attack method. However, this can be easily bypassed, since an attacker can use an HTTP POST request to perform a CSRF attack.</p>
+
+</div>
+
+<!-- Unimplemented ------------------------------------------------------------->
+
+<!-- Demo Exploitation --------------------------------------------------------->
+
+<div id="exploitationOfCSFR">
+
+    <p>*Insert interactivity*</p>
+
+    <p>
+
+        <button onclick='
+                            $("#exploitationFinished").fadeIn();'>Next</button>
+
+    </p>
+
+</div>
+
+
+<!-- Completion Message ------------------------------------------------------->
+
+<div id="exploitationFinished">
+
+    <p>Well done - you have successfully exploited an internet application using CSFR.</p>
+
+
+            <button id="Done">Done</button>
+
+</div>
+
+</body>
+
+</html>
