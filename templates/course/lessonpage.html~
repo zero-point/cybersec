@@ -1,5 +1,9 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block head %}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
 
 <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js">
 </script>
@@ -15,93 +19,63 @@
     }
 </script>
 
+{% endblock %}
 <!-- Load jQuery from Google's servers ---------------------------------------->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
+
+
+<script src="{% static "bootstrap.min.js" %}"></script>
+<script src="{% static "carousel.js" %}"></script>
 
 <!-- Hide modules before the user has progressed successfully ----------------->
 <script>
 $(document).ready(function(){
-    $("#implement").hide();
-    $("#demo1").hide();
-    $("#prevent").hide();
-    
     $("#demoHolder").load("{{MEDIA_URL}}{{ resources.implementDemo }}");
 });
 </script>
 
-{% endblock %}
 {% block title %} {{ resources.title }} - {{block.super}}{%endblock%}
 {% block content %}
 
-<h1> {{resources.title }} </h1>
-
-<!-- Lesson Introduction ------------------------------------------------------>
-<div class="lesson" id="intro">
-    <div class="lesson-left">
-        <span><h3>Intro</h3>
-    </div>
-	<div class="lesson-right" style=" background:#FFF;">
-		<p>
-		    {{ resources.intro }}
-		</p>
-		<p>
-		    <button onclick="$(this).hide(); $('#implement').fadeIn();">
-		        Click to see how we'll implement it
-		    </button>
-	    </p>
-	</div>
-</div>
-
-<!-- Details on how to implement security weakness ---------------------------->
-<div class="lesson" id="implement">
-    <div class="lesson-left">
-		<span><h2>Implementation</h2>
-	</div>
-	<div class="lesson-right" style=" background:#FFF;">
-		<p>
-		    {{ resources.implementation }}
-		</p>
-		<p>
-		    <button onclick="$(this).hide(); $('#implementDemoComplete').hide(); $('#demo1').fadeIn();">
-		        Click to perform a demo
-		    </button>
-		</p>
-	</div>
-</div>
-
-<!-- Placeholder for the implementation demonstration ------------------------->
-<div class="lesson" id="demo1">
-	<div class="lesson-left">
-		<span><h2>Demo</h2>
-	</div>
-	<div class="lesson-right" style=" background:#FFF;">
-	    <p id="demoHolder">
-	    </p>
-		<p>
-		    <button id="implementDemoComplete"
-		            onclick="$(this).hide(); $('#prevent').fadeIn();">
-		        Click to see how to prevent it
-		    </button>
-		</p>
-	</div>
-</div>
-
-<!-- How to prevent this security weakness ------------------------------------>
-<div class="lesson" id="prevent">
-	<div class="lesson-left">
-		<span><h2>Prevention</h2>
-	</div>
-	<div class="lesson-right" style=" background:#FFF;">
-	    <p>
+<h1><strong> {{resources.title }} </strong></h1>
+<p>{{ resources.implementDemo }}</p>
+<section clss="block">
+    <div id="myCarousel" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="active item">
+                <span><h3>Background</h3>
+                <p>{{ resources.intro }}</p>
+                <a class="btn btn-primary"href="#myCarousel" data-slide="next">
+                    Continue
+                </a>
+            </div>
+            <div class="item">
+                <span><h3>Implementation</h3>
+                <p>{{ resources.implementation }}</p>
+                <a class="btn btn-primary"href="#myCarousel" data-slide="next">
+                    Continue
+                </a>
+            </div>
+            <div class="item">
+                <span><h3>Demo</h3>
+                <p id="demoHolder"></p>
+		        <p>
+		            <a id="implementDemoComplete" class="btn btn-primary"href="#myCarousel" data-slide="next">
+                        Continue
+                    </a>
+		        </p>
+            </div>
+            <div class="item">
+            <span><h3>Prevention</h3>
+            <p>
 		    {{ resources.prevention }}
 		</p>
 		<p>
-		    <button onclick="window.location.href='/lessons'">
+		    <button class="btn btn-primary" onclick="window.location.href='/lessons'">
 		        Collect points for this lesson
 		    </button>
 		</p>
-	</div>
-</div>
-
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
