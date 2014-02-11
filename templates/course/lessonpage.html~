@@ -22,24 +22,23 @@
 {% endblock %}
 <!-- Load jQuery from Google's servers ---------------------------------------->
 
+<script>
+$(document).ready(function(){
+$('#myCarousel').carousel({interval: false});});
+</script>
 
 <script src="{% static "bootstrap.min.js" %}"></script>
 <script src="{% static "carousel.js" %}"></script>
 
 <!-- Hide modules before the user has progressed successfully ----------------->
-<script>
-$(document).ready(function(){
-    $("#demoHolder").load("{{MEDIA_URL}}{{ resources.implementDemo }}");
-});
-</script>
-
 {% block title %} {{ resources.title }} - {{block.super}}{%endblock%}
 {% block content %}
 
 <h1><strong> {{resources.title }} </strong></h1>
-<p>{{ resources.implementDemo }}</p>
-<section clss="block">
+
+<section class="block">
     <div id="myCarousel" class="carousel slide">
+    <script>$('#myCarousel').carousel({interval: false});</script>
         <div class="carousel-inner">
             <div class="active item">
                 <span><h3>Background</h3>
@@ -51,13 +50,13 @@ $(document).ready(function(){
             <div class="item">
                 <span><h3>Implementation</h3>
                 <p>{{ resources.implementation }}</p>
-                <a class="btn btn-primary"href="#myCarousel" data-slide="next">
+                <a class="btn btn-primary"href="#myCarousel" data-slide="next" onclick="$('#demoHolder').load('{{MEDIA_URL}}{{ resources.implementDemo }}'); $('#implementDemoComplete').hide();">
                     Continue
                 </a>
             </div>
             <div class="item">
                 <span><h3>Demo</h3>
-                <p id="demoHolder"></p>
+                <div id="demoHolder"></div>
 		        <p>
 		            <a id="implementDemoComplete" class="btn btn-primary"href="#myCarousel" data-slide="next">
                         Continue
