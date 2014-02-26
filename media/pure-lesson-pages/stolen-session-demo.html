@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+
+<!--
+Basic session steal demo
+
+An example of a bad practice of storing session ID in a URL
+(basically a slide show) 
+
+Author              Arnas Binkauskas (Team P, University of Glasgow)
+
+Last Modified       26 Feb 2014
+-->
+
+ <body>
+  <!-- Import some animations from jQuery-->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+  </script>
+
+  <script> 
+
+    $(document).ready(function(){
+
+        // Hide these sections until the user has progressed accordingly.
+
+        //$("#cookieDemo").hide();
+
+	$("#Done").click(function()
+		{$("#cookieDemo").hide();$('#implementDemoComplete').fadeIn();});
+
+    });
+  </script>
+
+  <div id="cookieDemo">
+
+    <p>First lets assume a very basic login application:</p>
+    <img src="K2.jpg" alt="1st login screen image here">
+	<p>user clicks "Log in" and is notified that the authentication has been successful: </p>
+    <img src="" alt="Authentication screen here">
+    <p>He then continues to the next page within the application</p>
+    <img src="" alt="Authentication screen here">
+    
+
+	<p>When the user's browser loads the page, it will execute whatever JavaScript code is contained inside the &lt;script> tags. The attacker has now succeeded with his attack.</p>
+
+    <p>
+
+        <button onclick='$("#cookieDemo").fadeIn();' id="Done">Next</button>
+
+    </p>
+
+  </div>
+
+ </body>
+</html>
