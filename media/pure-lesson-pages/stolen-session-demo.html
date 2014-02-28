@@ -6,8 +6,9 @@ Basic session steal demo
 
 An example of a bad practice of storing session ID in a URL
 
-Some pictures and background taken from this article by Troy Hunt:
+Pictures and subject background taken from this article by Troy Hunt:
 http://www.troyhunt.com/2010/07/owasp-top-10-for-net-developers-part-3.html
+This is great source material for this subject and I would like to give full credit for materials used. 
 
 Author              Arnas Binkauskas (Team P, University of Glasgow)
 
@@ -31,21 +32,24 @@ Might consider breaking down into individual modules for easier maintance.
         $("#slide3").hide();
         $("#slide4").hide();
         $("#slide5").hide();
-
-
+        $("#slide6").hide();
+        $("#slide7").hide();
+        $("#slide8").hide();
+        $('#implementDemoComplete').hide();
 
 	$("#Done").click(function()
-		{$("#cookieDemo").hide();$('#implementDemoComplete').fadeIn();});
+		{$("#Demo").hide();$('#implementDemoComplete').fadeIn();});
 
     });
   </script>
 
-  <div id="cookieDemo">
+  <div id="Demo">
 
     <div id="slide1">
 
       <p>First lets consider a very basic login application which uses cookies to store the users sessionID:</p>
-      <img src=http://s13.postimg.org/eiunpn4xz/image.jpg alt="Image did not load, please contact site admin"/>
+      <img src=http://lh5.ggpht.com/_Qbax2DGZEkU/TD5iBuDMJ0I/AAAAAAAAB4s/WlxUd0xXnK4/image8.png?imgmax=800
+       alt="Image did not load, please contact site admin"/>
       <p>
           <button onclick='$("#n1").hide();
           $("#slide2").fadeIn(1750)' id="n1">Next</button>
@@ -60,7 +64,8 @@ Might consider breaking down into individual modules for easier maintance.
         just so that it does: 
 
       </p>
-      <img src=http://s13.postimg.org/eiunpn4xz/image.jpg alt="Image did not load, please contact site admin"/>
+      <img src=http://lh3.ggpht.com/_Qbax2DGZEkU/TD5iDBDU3cI/AAAAAAAAB4w/MqTKpHljzgo/image44.png?imgmax=800
+       alt="Image did not load, please contact site admin"/>
       <p>
           <button onclick='$("#slide1").slideUp(1000); $("#n2").hide(); 
           $("#slide3").fadeIn(1750); $("#b3").fadeIn()' id="n2">Next</button>
@@ -74,7 +79,8 @@ Might consider breaking down into individual modules for easier maintance.
         quating his login name:
 
       </p>
-      <img src=http://s13.postimg.org/eiunpn4xz/image.jpg alt="Image did not load, please contact site admin"/>
+      <img src=http://lh3.ggpht.com/_Qbax2DGZEkU/TD5iEbj3yHI/AAAAAAAAB40/iOMYV1mgRR8/image14.png?imgmax=800
+       alt="Image did not load, please contact site admin"/>
       <p>
           <button onclick='$("#slide1").slideDown(1000); $("#n2").fadeIn(); 
           $("#slide3").fadeOut(1750); $("#b3").hide()' id="b3">Back</button>
@@ -91,7 +97,8 @@ Might consider breaking down into individual modules for easier maintance.
        If we take a look at the cookie, we should see the sessionID for his session:
 
       </p>
-      <img src=http://s13.postimg.org/eiunpn4xz/image.jpg alt="Image did not load, please contact site admin"/>
+      <img src=http://lh6.ggpht.com/_Qbax2DGZEkU/TD5iFvBlwWI/AAAAAAAAB44/w3jwDYWdMUg/image38.png?imgmax=800
+       alt="Image did not load, please contact site admin"/>
       <p>
           <button onclick='$("#slide2").slideDown(1000); $("#n3").fadeIn(); $("#b3").fadeIn(); 
           $("#slide4").fadeOut(1750); $("#b4").hide()' id="b4">Back</button>
@@ -104,10 +111,11 @@ Might consider breaking down into individual modules for easier maintance.
     <div id="slide5">
       <p>
 
-        Now if we try to copy and paste the previous user URL to a different browser (could be a different machine too!) we expect it to fail the user authentication, as the sessionID is specific to the clients browser and is persisted via cookie:
+        If we try to copy and paste the previous user URL to a different browser (could be a different machine too!) we expect it to fail the user authentication, as the sessionID is specific to the clients browser and is persisted via cookie. In other words, it is a completely different session:
 
       </p>
-      <img src=http://s13.postimg.org/eiunpn4xz/image.jpg alt="Image did not load, please contact site admin"/>
+      <img src=http://lh6.ggpht.com/_Qbax2DGZEkU/TD5iHOBDwOI/AAAAAAAAB48/VnOnqxlktfs/image17.png?imgmax=800
+       alt="Image did not load, please contact site admin"/>
       <p>
           <button onclick='$("#slide3").slideDown(1000); $("#n4").fadeIn(); $("#b4").fadeIn(); 
           $("#slide5").fadeOut(1750); $("#b5").hide()' id="b5">Back</button>
@@ -115,10 +123,72 @@ Might consider breaking down into individual modules for easier maintance.
           <button onclick='$("#slide4").slideUp(1000); $("#n5").hide(); $("#b5").hide(); 
           $("#slide6").fadeIn(1750); $("#b6").fadeIn()' id="n5">Next</button>
       </p>
-    </div>   
+    </div>
 
-  </div>
+    <div id="slide6">
+      <p>
 
+        Now lets see what happens when this application is configured to use cookieless mode:
+
+      </p>
+      <img src=http://lh6.ggpht.com/_Qbax2DGZEkU/TD5iJnPp_iI/AAAAAAAAB5E/Ba3WJXJne3Q/image20.png?imgmax=800
+       alt="Image did not load, please contact site admin"/>
+      <p>
+          <button onclick='$("#slide4").slideDown(1000); $("#n5").fadeIn(); $("#b5").fadeIn(); 
+          $("#slide6").fadeOut(1750); $("#b6").hide()' id="b6">Back</button>
+
+          <button onclick='$("#slide5").slideUp(1000); $("#n6").hide(); $("#b6").hide(); 
+          $("#slide7").fadeIn(1750); $("#b7").fadeIn()' id="n6">Next</button>
+      </p>
+    </div>
+
+    <div id="slide7">
+      <p>
+
+        The sessionID is now stored in the URL and is persistant through different pages within the application:
+
+      </p>
+      <img src=http://lh3.ggpht.com/_Qbax2DGZEkU/TD5iKxzpDgI/AAAAAAAAB5I/9ZSfB9FNVFg/image29.png?imgmax=800
+       alt="Image did not load, please contact site admin"/>
+      <p>
+      </p>
+               
+      <p>
+      </p>
+      <img src=http://lh6.ggpht.com/_Qbax2DGZEkU/TD5iMdVeU2I/AAAAAAAAB5M/oaigxgeie04/image23.png?imgmax=800
+       alt="Image did not load, please contact site admin"/>
+      <p>
+          <button onclick='$("#slide5").slideDown(1000); $("#n6").fadeIn(); $("#b6").fadeIn(); 
+          $("#slide7").fadeOut(1750); $("#b7").hide()' id="b7">Back</button>
+
+          <button onclick='$("#slide6").slideUp(1000); $("#n7").hide(); $("#b7").hide(); 
+          $("#slide8").fadeIn(1750); $("#b8").fadeIn()' id="n7">Next</button>
+      </p>
+    </div>
+
+    <div id="slide8">
+
+      </p>
+
+        And here is he big threat- if we pass on this URL to a different broswer(again- might be a different machine too!) the sessionID is maintained!
+
+      <p>
+      </p>
+        <img src=http://lh5.ggpht.com/_Qbax2DGZEkU/TD5iOM1OUoI/AAAAAAAAB5Q/aGgZRabYmIQ/image26.png?imgmax=800
+        alt="Image did not load, please contact site admin"/>
+      <p>
+      </p>
+
+        The potential hacker has bypassed the authentication and is now impersonating his victim and has user access to all personal data on this application. 
+
+      <p>
+          <button onclick='$("#slide6").slideDown(1000); $("#n7").fadeIn(); $("#b7").fadeIn(); 
+          $("#slide8").fadeOut(1750); $("#b8").hide()' id="b8">Back</button>
+
+          <button onclick=''
+           id="Done">Finish</button>
+      </p>
+    </div>
 
  </body>
 </html>
