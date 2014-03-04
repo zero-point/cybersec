@@ -1,13 +1,33 @@
+<!--
+
+Lesson Page
+
+Placeholder for lessons in the database. Each part of the lesson is displayed as
+a Bootstrap carousel slide.
+
+A button at the bottom of each slide allows the user to progress to the next
+slide. The demonstration slide can keep its button hidden until the user has
+interacted with the system by hiding $(#implementDemoComplete), and displaying
+it as necessary.
+
+Author              Donald Martin (for Team P, University of Glasgow, 2013/14)
+Version             1.0
+Last Modified       4 March 2014
+-->
+
 {% extends "base.html" %}
 {% load staticfiles %}
+
+<!-- Loading jQuery, JS & Bootstrap ------------------------------------------->
 {% block head %}
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
+<!-- Important Resources -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" />
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js" />
+<script src="{% static "bootstrap.min.js" %}" />
+<script src="{% static "carousel.js" %}" />
 
-<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js">
-</script>
-
+<!-- Stopping Carousel from Autoplaying -->
 <script type="text/javascript">
     window.onload = function () {
         var p_elements  = document.getElementById('code').getElementsByTagName('code');
@@ -17,63 +37,66 @@
             p_elements[i].innerHTML = p_elements[i].innerHTML.replace(unixNewLine, '<br/>');
         }
     }
+    
+    function stopAutoPlay() {
+        $(document).ready(function(){
+            $('#myCarousel').carousel('pause');
+        });
+    };
 </script>
-
 {% endblock %}
-<!-- Load jQuery from Google's servers ---------------------------------------->
 
-<script>
-$(document).ready(function(){
-$('#myCarousel').carousel({interval: false});});
-</script>
-
-<script src="{% static "bootstrap.min.js" %}"></script>
-<script src="{% static "carousel.js" %}"></script>
-
-<!-- Hide modules before the user has progressed successfully ----------------->
+<!-- Main Page Content -------------------------------------------------------->
 {% block title %} {{ resources.title }} - {{block.super}}{%endblock%}
 {% block content %}
 
-<h1><strong> {{resources.title }} </strong></h1>
+<!-- Page Title -->
+<h1>
+    <strong>
+        {{resources.title }}
+    </strong>
+</h1>
 
 <section class="block">
     <div id="myCarousel" class="carousel slide">
-    <script>$('#myCarousel').carousel({interval: false});</script>
         <div class="carousel-inner">
-            <div class="active item">
-                <span><h3>Background</h3>
+        
+            <!-- First Slide (Background) ------------------------------------->
+            <div class="item active">
+                <h3>Background</h3>
                 <p>{{ resources.intro }}</p>
-                <a class="btn btn-primary"href="#myCarousel" data-slide="next">
+                <a class="btn btn-primary" href="#myCarousel" data-slide="next" onclick="stopAutoPlay();">
                     Continue
                 </a>
             </div>
+            
+            <!-- Second Slide (Implementation) -------------------------------->
             <div class="item">
-                <span><h3>Implementation</h3>
+                <h3>Implementation</h3>
                 <p>{{ resources.implementation }}</p>
-                <a class="btn btn-primary"href="#myCarousel" data-slide="next" onclick="$('#demoHolder').load('{{MEDIA_URL}}{{ resources.implementDemo }}'); $('#implementDemoComplete').hide();">
+                <a class="btn btn-primary"href="#myCarousel" data-slide="next" onclick="$('#demoHolder').load('{{MEDIA_URL}}{{ resources.implementDemo }}'); $('#implementDemoComplete').hide(); stopAutoPlay();">
                     Continue
                 </a>
             </div>
+            
+            <!-- Third Slide (Demonstration) ---------------------------------->
             <div class="item">
-                <span><h3>Demo</h3>
+                <h3>Demo</h3>
                 <div id="demoHolder"></div>
-		        <p>
-		            <a id="implementDemoComplete" class="btn btn-primary"href="#myCarousel" data-slide="next">
-                        Continue
-                    </a>
-		        </p>
+		        <a id="implementDemoComplete" class="btn btn-primary"href="#myCarousel" data-slide="next" onclick="stopAutoPlay();">
+                    Continue
+                </a>
             </div>
+            
+            <!-- Fourth Slide (Prevention) ------------------------------------>
             <div class="item">
-            <span><h3>Prevention</h3>
-            <p>
-		    {{ resources.prevention }}
-		</p>
-		<p>
-		    <button class="btn btn-primary" onclick="window.location.href='/lessons'">
-		        Collect points for this lesson
-		    </button>
-		</p>
+                <h3>Prevention</h3>
+                <p>{{ resources.prevention }}</p>
+		        <button class="btn btn-primary" onclick="window.location.href='/lessons'">
+		            Collect points for this lesson
+		        </button>
             </div>
+            
         </div>
     </div>
 </section>

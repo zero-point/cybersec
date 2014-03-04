@@ -1,5 +1,3 @@
-<!DOCTYPE HTML>
-<html>
 <!--
 SQL Injection Demo
 
@@ -7,14 +5,12 @@ A demonstration on how to insert SQL syntax into a web-form to perform
 transactions on an unsecured database.
 
 Author              Donald Martin (for Team P, University of Glasgow)
-Last Modified       12 January 2014
+Version             1.0
+Last Modified       4 March 2014
 -->
+<!DOCTYPE HTML>
+<html>
 <body>
-
-<!-- Import some animations from jQuery-->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
-
 <script>
     // Create the database, and record that this is the first time page viewed.
     var db = openDatabase('BankDB', '1.0', 'Unsecure Database', 2 * 1024 * 1024);
@@ -51,7 +47,10 @@ Last Modified       12 January 2014
                 tx.executeSql('SELECT * FROM Account WHERE id = ' + accountNo +
                 ' AND password = \'' + password + '\'', [], function(tx, results) {
                     if (results.rows.length > 0) {
-                        $("#LoginForm").hide();
+                        $("#LoginForm1").hide();
+                        $("#LoginForm2").hide();
+                        $("#LoginForm3").hide();
+                        
                         $("#LoginFailed").hide();
                         
                         if (firstTime == 1) {
@@ -78,27 +77,29 @@ Last Modified       12 January 2014
     storing information on customer logins for the bank's website.</p>
     <p>
     The database is as follows:
-        <table border="1" cellpadding="10">
-            <tr>
-                <th>id</th><th>password</th>
-            </tr>
-            <tr>
-                <td>1000</td><td>abc123</td>
-            </tr>
-            <tr>
-                <td>1001</td><td>password</td>
-            </tr>
-            <tr>
-                <td>1002</td><td>scotland</td>
-            </tr>
-        </table>
+        <center>
+            <table border="1" cellpadding="10">
+                <tr>
+                    <th>id</th><th>password</th>
+                </tr>
+                <tr>
+                    <td>1000</td><td>abc123</td>
+                </tr>
+                <tr>
+                    <td>1001</td><td>password</td>
+                </tr>
+                <tr>
+                    <td>1002</td><td>scotland</td>
+                </tr>
+            </table>
+        </center>
     </p>
     <p>
     Alternatively, you can visit the developer tools of your browser to see this
     database stored on your system.
     </p>
     <p>
-        <button onclick='$("#introSQL").hide(); $("#demoSQL").fadeIn();'>Next</button>
+        <button class="btn btn-primary" onclick='$("#introSQL").hide(); $("#demoSQL").fadeIn();'>Next</button>
     </p>
 </div>
 
@@ -107,34 +108,39 @@ Last Modified       12 January 2014
     <p>The form you have just completed allows you to log into our system by
     performing an SQL query on our database. The code for this query is as
     follows:</p>
+    
     <p>
-        <code>
+        <center><code>
             SELECT * FROM Account WHERE id = accountNo AND password = password
-        </code>
+        </code></center>
+    </p>
+    
+    <p>
+        This query selects all records from the database that contain a username of
+        "1000", and a password of "abc123". As there is at least one row that fulfills
+        this criteria, the website's scripting allows you to log in.
     </p>
     <p>
-    This query selects all records from the database that contain a username of
-    "1000", and a password of "abc123". As there is at least one row that fulfills
-    this criteria, the website's scripting allows you to log in.
+        <center>
+            <table border="1" cellpadding="10">
+                <tr>
+                    <th>id</th><th>password</th>
+                </tr>
+                <tr>
+                    <td style="background-color:Aquamarine">1000</td><td style="background-color:Aquamarine">abc123</td>
+                </tr>
+                <tr>
+                    <td>1001</td><td>password</td>
+                </tr>
+                <tr>
+                    <td>1002</td><td>scotland</td>
+                </tr>
+            </table>
+        </center>
     </p>
     <p>
-        <table border="1" cellpadding="10">
-            <tr>
-                <th>id</th><th>password</th>
-            </tr>
-            <tr>
-                <td style="background-color:Aquamarine">1000</td><td style="background-color:Aquamarine">abc123</td>
-            </tr>
-            <tr>
-                <td>1001</td><td>password</td>
-            </tr>
-            <tr>
-                <td>1002</td><td>scotland</td>
-            </tr>
-        </table>
-    </p>
-    <p>
-        <button onclick='$("#explanationOfSQL").hide();
+        <button class="btn btn-primary"
+                onclick='$("#explanationOfSQL").hide();
                          $("#exploitationOfSQL").fadeIn();
                          $("#LoginFailed").hide();
                          $("#LoginSuccess").hide();
@@ -144,7 +150,9 @@ Last Modified       12 January 2014
                          document.getElementById("account").value="";
                          document.getElementById("password").value="";
                          
-                         $("#LoginForm").fadeIn();'>Next</button>
+                         $("#LoginForm1").fadeIn();
+                         $("#LoginForm2").fadeIn();
+                         $("#LoginForm3").fadeIn();'>Next</button>
     </p>
 </div>
 
@@ -154,9 +162,9 @@ Last Modified       12 January 2014
     to exploit this loophole to our advantage. Using the form below, enter any
     number in the Account Number box, and enter the following password.</p>
     <p>
-        <code>
+        <center><code>
             abc' OR 1=1 OR password='abc
-        </code>
+        </code></center>
     </p>
     <p>The apostrophe after abc will terminate the password field and begin
     executing SQL code. 1=1 is an SQL boolean value that will always return
@@ -171,30 +179,32 @@ Last Modified       12 January 2014
     This input will execute the following SQL command:
     </p>
     <p>
-        <code>
+        <center><code>
             SELECT * FROM Account WHERE id = accountNo AND password = abc' OR 1=1
             OR password='abc'
-        </code>
+        </code></center>
     </p>
     <p>
     As the SQL statement will exeute 1=1 (which is always true), you will receive
     all of the records in the database.
     </p>
     <p>
-        <table border="1" cellpadding="10">
-            <tr>
-                <th>id</th><th>password</th>
-            </tr>
-            <tr>
-                <td style="background-color:Aquamarine">1000</td><td style="background-color:Aquamarine">abc123</td>
-            </tr>
-            <tr>
-                <td style="background-color:Aquamarine">1001</td><td style="background-color:Aquamarine">password</td>
-            </tr>
-            <tr>
-                <td style="background-color:Aquamarine">1002</td><td style="background-color:Aquamarine">scotland</td>
-            </tr>
-        </table>
+        <center>
+            <table border="1" cellpadding="10">
+                <tr>
+                    <th>id</th><th>password</th>
+                </tr>
+                <tr>
+                    <td style="background-color:Aquamarine">1000</td><td style="background-color:Aquamarine">abc123</td>
+                </tr>
+                <tr>
+                    <td style="background-color:Aquamarine">1001</td><td style="background-color:Aquamarine">password</td>
+                </tr>
+                <tr>
+                    <td style="background-color:Aquamarine">1002</td><td style="background-color:Aquamarine">scotland</td>
+                </tr>
+            </table>
+        </center>
     </p>
     <p>Well done - you have successfully exploited a database using SQL.</p>
 </div>
@@ -205,35 +215,26 @@ Last Modified       12 January 2014
     <p id="demoSQLIntro">Using the form below, enter the account number "1000"
     and password "abc123" to access this account's data.</p>
     
-    <!-- Failure Message -->
-    <div id="LoginFailed">
-        <p>Login failed - please try again.</p>
-    </div>
-    
     <!-- Login Form -->
-    <div id="LoginForm">
-        <p>
-            <table>
-                <tr>
-                    <td>Account Number</td>
-                    <td><input type="text" id="account" /></td>
-                </tr>
-                <tr>
-                    <td>Password</td>
-                    <td><input type="password" id="password" /></td>
-                </tr>
-            </table>
-        </p>
-        <p>
-            <button id="loginButton">Log In</button>
-        </p>
+    <div id="LoginForm1" class="col-md-4" />
+    <div id="LoginForm2" class="col-md-4">
+        <div id="LoginFailed" class="alert alert-danger">
+            <p>Login failed - please try again.</p>
+        </div>
+        
+        <p><input type="text" class="form-control" id="account" placeholder="Account Number" /></p>
+        <p><input type="password" class="form-control" id="password" placeholder="Password" /></p>
+        <p><button class="btn btn-primary" id="loginButton">Log In</button></p>
     </div>
+    <div id="LoginForm3" class="col-md-4" />
     
     <!-- Success Message -->
     <div id="LoginSuccess">
-        <p>Login successful - have a nice day.</p>
+        <div class="alert alert-success">
+            <p>Login successful - have a nice day.</p>
+        </div>
         <p>
-            <button onclick='$("#demoSQL").hide(); $("#explanationOfSQL").fadeIn();'>
+            <button class="btn btn-primary" onclick='$("#demoSQL").hide(); $("#explanationOfSQL").fadeIn();'>
             Next
             </button>
         </p>
