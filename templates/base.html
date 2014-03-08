@@ -17,20 +17,17 @@
         {% include 'components/navbar.html' %}
 
         <!-- Main Content ----------------------------------------------------->
-        <div class="container" style="padding-top:100px;">
+        <!--<div class="container" style="padding-top:100px;">-->
             {% block content %}
             {% endblock %}
             
             {% block extracontent %}
             {% endblock %}
-        </div>
+        <!-- </div> -->
         
         <!-- Loading JS last to improve performance --------------------------->
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
     
         <!-- Footer to bottom of page ----------------------------------------->
-        <div class="footer navbar-fixed-bottom">
-            <p>&copy; 2014, University of Glasgow, Team P</p>
-        </div>
 </body>
 </html>

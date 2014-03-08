@@ -19,8 +19,8 @@ Displays the navigation bar atop the website.
 <div class="collapse navbar-collapse" id="navbar-collapse">
     <ul class="nav navbar-nav">
         {% if authenticated %}
-            <li><a class="glyphicon glyphicon-home"> Home</a></li>
-            <li><a class="glyphicon glyphicon-user"> Profile</a></li>
+            <li><a class="glyphicon glyphicon-home" href="/"> Home</a></li>
+            <li><a class="glyphicon glyphicon-user" href="/student/"> Profile</a></li>
             <li><a class="glyphicon glyphicon-wrench"> Settings</a></li>
             <li><a class="glyphicon glyphicon-log-out" href="{% url 'logout'%}"> Logout</a></li>
         {% endif %}
