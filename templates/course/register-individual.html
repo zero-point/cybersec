@@ -1,0 +1,76 @@
+<!--
+
+Login Page
+
+Display a simple login page to the user.
+
+Author          Joshua McGhee, Donald Martin (for Team P, University of Glasgow)
+Version         1.0
+Last Modified   26 February 2014
+-->
+
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container" style="padding-top: 50px">
+    <h1><span class="glyphicon glyphicon-user"></span>&nbsp;Register as an Individual</h1>
+</div>
+
+<div class="container">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+    
+        {% if complete %}
+    
+            <div class="alert alert-success">
+                <strong>Success</strong>&nbsp;Your account has been created.
+            </div>
+    
+            <div class="container">
+                <p>You will now be able to log into our system.</p>
+            </div>
+    
+        {% else %}
+        
+            {% if alreadyExists %}
+        
+                <div class="alert alert-danger">
+                    <strong>Error</strong> Your email address has been used before.
+                </div>  
+        
+            {% endif %}
+        
+                <form role="form" action="/register/individual/" method="post">
+                
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="forename">Forename</label>
+                        <input type="text" class="form-control" placeholder="Please enter your first name" id="forename" name="forename" />
+                    </div>
+                    <div class="form-group">
+                        <label for="surname">Surname</label>
+                        <input type="text" class="form-control" placeholder="Please enter your last name" id="surname" name="surname" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control" placeholder="This will be used to log you in" id="email" name="email" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" placeholder="Secret key to log in" id="password" name="password" />
+                    </div>
+                    <div class="form-group">
+                        <center>
+                            <input type="submit" class="btn btn-primary" value="Sign Up" />
+                            <input type="hidden" name="next" value="{{ next|escape }}" />
+                        </center>
+                    </div>
+                </form>
+        
+        {% endif %}
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+{% endblock %}

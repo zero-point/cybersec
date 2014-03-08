@@ -1,0 +1,37 @@
+<!--
+
+Login Page
+
+Display a simple login page to the user.
+
+Author          Joshua McGhee, Donald Martin (for Team P, University of Glasgow)
+Version         1.0
+Last Modified   26 February 2014
+-->
+
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container" style="padding-top: 50px">
+    <h1><span class="glyphicon glyphicon-briefcase"></span>&nbsp;Register as an Employee</h1>
+</div>
+
+<div class="container">
+    <div class="col-md-4"></div>
+    <div class="col-md-4"> 
+        <div class="alert alert-danger">
+            <strong>Error</strong> Employee signup is not allowed.
+        </div>
+        <p>
+            Unfortunately, employee self-registration is not permitted. Should you
+            wish to sign up to our system within your corporation, please contact
+            your system administrator.
+        </p>
+        <p>
+            We hope that you join us soon.
+        </p>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+{% endblock %}

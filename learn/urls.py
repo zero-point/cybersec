@@ -26,7 +26,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^lessons/', include('course.urls')),
     url(r'^student/', include('student.urls')),
-   	url(r'^$', RedirectView.as_view(url='/lessons/')),
+    url(r'^register/individual', views.register_individual, name='register_individual'),
+    url(r'^register/employee', views.register_employee, name='register_employee'),
+    url(r'^$', views.index, name='index'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()

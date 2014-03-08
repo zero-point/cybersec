@@ -74,12 +74,12 @@ Last Modified   26 February 2014
         </p>
         <center>
             <p>
-                <a class="btn btn-primary" role="button">
+                <a class="btn btn-primary" role="button" href="/register/individual">
                     <span class="glyphicon glyphicon-user"></span>
                     &nbsp;I am an individual</a>
             </p>
             <p>
-                <a class="btn btn-primary" role="button">
+                <a class="btn btn-primary" role="button" href="/register/employee">
                     <span class="glyphicon glyphicon-briefcase"></span>
                     &nbsp;I am an employee</a>
             </p>
@@ -93,25 +93,42 @@ Last Modified   26 February 2014
             the system.
         </p>
         <p>
-        {% if form.errors %}
-            <div class="alert alert-danger">
-                <strong>Error</strong> 
-                Login details incorrect. Please try again.
-            </div>{% endif %}
-            <div class="form-group">
-                <label for="username">Email</label>
-                <input type="email" class="form-control" placeholder="Please enter your email address" id="email" name="email" />
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" placeholder="Please enter your password" id="password" name="password" />
-            </div>
-            <div class="form-group">
-                <center>
-                    <input type="submit" class="btn btn-primary" value="Log In" />
-                    <input type="hidden" name="next" value="{{ next|escape }}" />
-                </center>
-            </div>
+            {% if failedLogin %}
+    
+                <div class="alert alert-danger">
+                    <strong>Oh snap! :(</strong> Incorrect email/password. Please try again.
+                </div>   
+        
+            {% endif %}
+    
+            {% if inactiveAccount %}
+    
+                <div class="alert alert-warning">
+                    <strong>Uh oh! :(</strong> Your account is inactive. Please contact an admin.
+                </div>   
+        
+            {% endif %}
+        </p>
+        <p>
+            <form role="form" action="/" method="post">
+            
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="username">Email</label>
+                    <input type="email" class="form-control" placeholder="Please enter your email address" id="email" name="username" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" placeholder="Please enter your password" id="password" name="password" />
+                </div>
+                <div class="form-group">
+                    <center>
+                        <input type="submit" class="btn btn-primary" value="Log In" />
+                        <input type="hidden" name="next" value="{{ next|escape }}" />
+                    </center>
+                </div>
+            </form>
         </p>
     </div>
 </div>
