@@ -50,6 +50,8 @@ Last Modified       4 March 2014
 {% block title %} {{ resources.title }} - {{block.super}}{%endblock%}
 {% block content %}
 
+<div class="container" style="padding-top: 75px">
+
 <!-- Page Title -->
 <h1>
     <strong>
@@ -65,7 +67,7 @@ Last Modified       4 March 2014
             <div class="item active">
                 <h3>Background</h3>
                 <p>{{ resources.intro }}</p>
-                <a class="btn btn-primary" href="#myCarousel" data-slide="next" onclick="stopAutoPlay();">
+                <a class="btn btn-primary" href="#myCarousel" data-slide="next" onclick="$('#myCarousel').carousel('pause');">
                     Continue
                 </a>
             </div>
@@ -74,7 +76,7 @@ Last Modified       4 March 2014
             <div class="item">
                 <h3>Implementation</h3>
                 <p>{{ resources.implementation }}</p>
-                <a class="btn btn-primary"href="#myCarousel" data-slide="next" onclick="$('#demoHolder').load('{{MEDIA_URL}}{{ resources.implementDemo }}'); $('#implementDemoComplete').hide(); stopAutoPlay();">
+                <a class="btn btn-primary"href="#myCarousel" data-slide="next" onclick="$('#demoHolder').load('{{MEDIA_URL}}{{ resources.implementDemo }}'); $('#implementDemoComplete').hide(); $('#myCarousel').carousel('pause');">
                     Continue
                 </a>
             </div>
@@ -83,7 +85,7 @@ Last Modified       4 March 2014
             <div class="item">
                 <h3>Demo</h3>
                 <div id="demoHolder"></div>
-		        <a id="implementDemoComplete" class="btn btn-primary"href="#myCarousel" data-slide="next" onclick="stopAutoPlay();">
+		        <a id="implementDemoComplete" class="btn btn-primary"href="#myCarousel" data-slide="next" onclick="$('#myCarousel').carousel('pause');">
                     Continue
                 </a>
             </div>

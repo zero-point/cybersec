@@ -23,26 +23,29 @@ def index(request):
     context = RequestContext(request)
     details = {"failedLogin": False, "inactiveAccount": False}
     
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user     = authenticate(username=username, password=password)
-        
-        if user is not None:
-            if user.is_active:
-                auth_login(request, user)
-                return HttpResponseRedirect("/lessons")
-            else:
-                details["inactiveAccount"] = True
-                return render_to_response("course/index.html", details, context)  
-        else:
-            print("Failing")
-            details["failedLogin"] = True
-            return render_to_response("course/index.html", details, context)
+    if request.user.is_authenticated():
+        return HttpResponseRedirect("/lessons")
     else:
-        return render_to_response("course/index.html", details, context)  
-        
-    return render_to_response("course/index.html", details, context)
+        if request.method == "POST":
+            username = request.POST["username"]
+            password = request.POST["password"]
+            user     = authenticate(username=username, password=password)
+            
+            if user is not None:
+                if user.is_active:
+                    auth_login(request, user)
+                    return HttpResponseRedirect("/lessons")
+                else:
+                    details["inactiveAccount"] = True
+                    return render_to_response("course/index.html", details, context)  
+            else:
+                print("Failing")
+                details["failedLogin"] = True
+                return render_to_response("course/index.html", details, context)
+        else:
+            return render_to_response("course/index.html", details, context)  
+            
+        return render_to_response("course/index.html", details, context)
 
 def register_individual(request):
     context = RequestContext(request)
@@ -112,4 +115,4 @@ def lesson_page(request):
 @login_required
 def logout_user(request):
     logout(request)
-    return redirect("lessons")
+    return redirect("/")

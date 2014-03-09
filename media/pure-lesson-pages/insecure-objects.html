@@ -1,11 +1,6 @@
+<!DOCTYPE HTML>
 <html>
 <body>
-<!---
-Direct Access to Insecure Objects Demo
-
-Author          Donald Martin (for Team P, University of Glasgow)
-Last Modified   19 January 204
--->
 <!-- Import some animations from jQuery-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
 </script>
@@ -94,7 +89,7 @@ $(document).ready(function(){
         1000 and 1001. Try changing the account number from 1000 to 1001.
     </p>
     <p>
-        <button onclick='$("#briefIntro2").hide(); $("#briefIntro3").fadeIn();'>
+        <button onclick="$('#briefIntro2').hide(); $('#addressBarHolder').hide(); $('#tableHolder').hide(); $('#briefIntro3').fadeIn(); $('#implementDemoComplete').fadeIn();">
             Next
         </button>
     </p>
@@ -114,9 +109,9 @@ $(document).ready(function(){
         Click next to find out about how this vulnerability can be prevented.
     </p>
     <p>
-        <button onclick='$('#implementDemoComplete').fadeIn();'>
+        <!-- <button onclick="$('#implementDemoComplete').fadeIn();">
             Next
-        </button>
+        </button> -->
     </p>
 </div>
 
