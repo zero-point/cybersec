@@ -23,12 +23,12 @@ Last Modified       13 Dec 2013
 
 <!-- Loop through all students -->
 {% block content %}
-	{%for student in students%}
-	<div class="student">
-        <span><h2>{{student.identity.first_name}} {{student.identity.last_name}}</h2>
-        <h3> {{student.points}} points gained</h3></span>
-        <p>{{lesson.description}}</p>
-        <a href="#">More...</a>
-	</div>
+<div class="container" style="padding-top: 75px">
+<table class="table">
+	{%for user in users %}
+        <tr><td>{{ user.forename }}</td><td>{{ user.surname }}</td><td>{{ user.points }}</td</tr>
+        
 	{% endfor %}
+</table>
+</div>
 {% endblock %}

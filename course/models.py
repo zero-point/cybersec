@@ -36,19 +36,6 @@ class Lesson(models.Model):
 			return u'%s' % (self.title)
 
 
-# Student Model ----------------------------------------------------------------
-#
-# Storing a student's details, how many lessons completed & total points gained
-
-class Student(models.Model):
-		identity    = models.OneToOneField(User)
-		lessons     = models.ManyToManyField(Lesson,blank=True,related_name="lessons")
-		completed   = models.ManyToManyField(Lesson,blank=True,related_name="completed")
-		points      = models.IntegerField(default=0,editable=False)
-
-		def __unicode__(self):
-			return u'%s %s' % (self.identity.first_name,self.identity.last_name)
-
 # Resource Model ---------------------------------------------------------------
 #
 # Storing website resources, such as links to projects
@@ -77,3 +64,9 @@ class PictureResource(Resource):
 
 class WebResource(Resource):
         location = models.URLField()
+        
+# Housekeepiny -----------------------------------------------------------------
+
+class LessonCompletions(models.Model):
+    user    = models.ForeignKey(User)
+    lesson  = models.ForeignKey(Lesson)

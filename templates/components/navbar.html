@@ -20,8 +20,7 @@ Displays the navigation bar atop the website.
     <ul class="nav navbar-nav">
         {% if authenticated %}
             <li><a class="glyphicon glyphicon-home" href="/"> Home</a></li>
-            <li><a class="glyphicon glyphicon-user" href="/student/"> Profile</a></li>
-            <li><a class="glyphicon glyphicon-wrench"> Settings</a></li>
+            <li><a class="glyphicon glyphicon-user" href="/student/profile"> Profile</a></li>
             <li><a class="glyphicon glyphicon-log-out" href="{% url 'logout'%}"> Logout</a></li>
         {% endif %}
     </ul>

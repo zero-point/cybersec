@@ -94,9 +94,11 @@ Last Modified       4 March 2014
             <div class="item">
                 <h3>Prevention</h3>
                 <p>{{ resources.prevention }}</p>
-		        <button class="btn btn-primary" onclick="window.location.href='/lessons'">
-		            Collect points for this lesson
-		        </button>
+                <form action="/lessons/res/" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="{{ courseID }}">
+                    <input class="btn btn-primary" type="submit" value="Collect points for this lesson">
+                </form>
             </div>
             
         </div>

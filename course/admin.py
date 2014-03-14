@@ -18,5 +18,5 @@ from course.models import *
 # Admin Page Widgets -----------------------------------------------------------
 
 admin.site.register(Lesson)
-admin.site.register(Student)
+admin.site.register(LessonCompletions)
 admin.site.register(PictureResource)

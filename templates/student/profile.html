@@ -17,12 +17,32 @@
 
 {% block content %}
 
-	<div class="lesson">
-		<div class="lesson-left">
-			<span><h2>{{res}}</h2>
-			<p>{{res.points}} points</p>
-		</div>
-	</div>
+<div class="container" style="padding-top: 75px">
+<h1>
+    <strong>{{ user.first_name }} {{ user.last_name }}'s Profile</strong>
+</h1>
+
+<div class="col-md-4">
+</div>
+<div class="col-md-4">
+<h3><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;My Details</h3>
+<table class="table">
+<tr><td>Forename</td><td>{{ user.first_name }}</td></tr>
+<tr><td>Surname</td><td>{{ user.last_name }}</td></tr>
+<tr><td>Email Address</td><td>{{ user.email }}</td></tr>
+<tr><td>Total Points</td><td>{{ points }}</td></tr>
+<tr><td colspan="2"><center><button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>&nbsp;Delete my Account</button></center></td></tr>
+</table>
+<h3><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Completed Lessons</h3>
+<table class="table">
+{% for lesson in lessons %}
+<tr><td>{{ lesson }}</td></tr>
+{% endfor %}
+</table>
+</div>
+<div class="col-md-4">
+</div>
+</div>
 
 {% endblock %}
 

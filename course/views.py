@@ -83,12 +83,20 @@ def register_employee(request):
 @login_required
 def lessons(request):
 	allLessons      = Lesson.objects.all()
+	completions     = LessonCompletions.objects.filter(user=request.user)
+	
+	completedLessons = []
+	
+	for completion in completions:
+	    completedLessons.append(completion.lesson.title)
+	    
 	template        = loader.get_template('course/lessons.html')
 	authenticater   = request.user.is_authenticated()
 	
 	context         = RequestContext(request,
 	                                    {'lessons': allLessons,
 	                                     'authenticated':authenticater,
+	                                     'completed': completedLessons,
 	                                })
 	
 	return HttpResponse(template.render(context))
@@ -99,14 +107,20 @@ def lessons(request):
 
 @login_required
 def lesson_page(request):
-    lesson          = Lesson.objects.get(title = request.GET.get("title", "NULL"))
-    template        = loader.get_template('course/lessonpage.html')
-    authenticater   = request.user.is_authenticated()
-    
-    context         = RequestContext(request, {'resources':lesson,
-                                               'authenticated':authenticater,})
-    
-    return HttpResponse(template.render(context))
+    if request.method == "POST":
+        lesson = Lesson.objects.get(title = request.POST["title"])
+        LessonCompletions.objects.get_or_create(user=request.user, lesson=lesson)
+        return lessons(request)
+    else:
+        lesson          = Lesson.objects.get(title = request.GET.get("title", "NULL"))
+        template        = loader.get_template('course/lessonpage.html')
+        authenticater   = request.user.is_authenticated()
+        
+        context         = RequestContext(request, {'resources':lesson,
+                                                   'authenticated':authenticater,
+                                                   'courseID':request.GET.get("title", "NULL"),})
+        
+        return HttpResponse(template.render(context))
     
 # Logout User ------------------------------------------------------------------
 #
