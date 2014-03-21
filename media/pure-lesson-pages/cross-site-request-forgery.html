@@ -38,19 +38,30 @@ Last Modified       23 January 2014
 
         $("#demoCSFR").hide();
 
-        $("#explanationOfCSFR").hide();
-
-        $("#exploitationOfCSFR").hide();
+        $("#exploitationOfCSRF").hide();
 
         $("#exploitationFinished").hide();
 
-	$("#Done").click(function()
-		{$("#exploitationFinished").hide();$('#implementDemoComplete').fadeIn();});
+	$("#Success").hide();
 
-    });
+	$("#Done").click(function()
+		{$("#exploitationOfCSRF").hide();$("#exploitationFinished").fadeIn();$('#implementDemoComplete').fadeIn();});
+
+	$("#Display").click(function() {
+                    var input = document.getElementById("userInput").value;
+            if (input.length === 0) {
+                alert("Please enter an HTTP GET request like in the example");
+            }
+            else{
+            document.getElementById('result').innerHTML = input;
+            $("#Success").fadeIn();
+
+            }
+	});
+
+});
 
 </script>
-
 
 
 <!-- Demo Introduction -------------------------------------------------------->
@@ -71,7 +82,7 @@ Last Modified       23 January 2014
 
     <p>
 
-        <button onclick='$("#introCSFR").hide(); $("#demoCSFR").fadeIn();' id="Done">Next</button>
+        <button onclick='$("#introCSFR").hide(); $("#demoCSFR").fadeIn();'>Next</button>
 
     </p>
 
@@ -85,28 +96,27 @@ Last Modified       23 January 2014
 
     <p>As described above, in order for a CSRF attack to be performed, the user must be authenticated with the target website. Assuming the victim is authenticated, the attacker can include a link or script in a third-party website that the victim visits. Thus, when the victim visits that website or link, the rogue script will be executed without the victim being aware of it. For instance, in a chat forum, an attacker posts a message which contains an image tag or an HTML image element. However, the source of the image contains a link which performs an action on a victim’s bank website account. So, instead of an image file the attacker has included a link that performs a bank transaction. </p>
 
-<p><code>
-&lt;a href="http://bank.com/transfer.do?acct=BOB&amount=100000">pic&lt;/a> <br/>
-</code></p>
+    <code>&lt;a href="http://bank.com/transfer.do?acct=BOB&amount=100000">pic&lt;/a></code>
 
-<p>The above is a CSRF attack using an HTTP GET request. There is a prevention method that would allow only HTTP POST requests, in order to prevent the above attack method. However, this can be easily bypassed, since an attacker can use an HTTP POST request to perform a CSRF attack.</p>
+    <p><br/>The above is a CSRF attack using a HTTP GET request. There is a prevention method that would allow only HTTP POST requests, in order to prevent the above attack method. However, this can be easily bypassed, since an attacker can use an HTTP POST request to perform a CSRF attack.</p>
+
+	<button onclick='$("#demoCSFR").hide();$("#exploitationOfCSRF").fadeIn();'>Next</button>
 
 </div>
 
-<!-- Unimplemented ------------------------------------------------------------->
-
 <!-- Demo Exploitation --------------------------------------------------------->
 
-<div id="exploitationOfCSFR">
+<div id="exploitationOfCSRF">
 
-    <p>*Insert interactivity*</p>
+    <p>To help you visualise the attack you can construct a malicious request and submit it through the form.</p>
+	<p>Try entering an HTTP GET request in the text box: (e.g. &lt;img src="http://bank.com/transfer.do?acct=MARIA&amount=100000" width="1" height="1" border="0">)</p>
+	<input type="text" id="userInput"/>
+	<input type="submit" id="Display" value="Submit">
 
-    <p>
-
-        <button onclick='
-                            $("#exploitationFinished").fadeIn();'>Next</button>
-
-    </p>
+    <span id="result"></span>
+	<div id="Success">
+        <br/><button id="Done">Done</button>
+	</div>
 
 </div>
 
@@ -117,8 +127,9 @@ Last Modified       23 January 2014
 
     <p>Well done - you have successfully exploited an internet application using CSFR.</p>
 
+    <p>This form of cyber attack relies on predicting the needed url to perform an action on your behalf.</p>
+    <p>Websites that contain sensitive information should generate a unique token -at the very least for every user session, so that the it wouldn't be predictable and thus easy to abuse.</p>
 
-            <button id="Done">Done</button>
 
 </div>
 

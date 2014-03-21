@@ -682,6 +682,7 @@ blockquote {
 }
 
 blockquote p {
+    font-style: italic;
   font-size: 17.5px;
   font-weight: 300;
   line-height: 1.25;
@@ -5225,8 +5226,8 @@ a.list-group-item.active > .badge,
 }
 
 .jumbotron {
-  padding: 30px;
-  margin-bottom: 30px;
+  padding: 6px;
+  margin-bottom: 0px;
   font-size: 21px;
   font-weight: 200;
   line-height: 2.1428571435;
@@ -5252,10 +5253,10 @@ a.list-group-item.active > .badge,
   max-width: 100%;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 368px) {
   .jumbotron {
-    padding-top: 48px;
-    padding-bottom: 48px;
+    padding-top: 38px;
+    padding-bottom: 0px;
   }
   .container .jumbotron {
     padding-right: 60px;
@@ -5263,7 +5264,7 @@ a.list-group-item.active > .badge,
   }
   .jumbotron h1,
   .jumbotron .h1 {
-    font-size: 63px;
+    font-size: 33px;
   }
 }
 

