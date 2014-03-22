@@ -53,7 +53,7 @@ def populate():
               "Lessons/lock.jpg",
               1000,
               "A direct object reference occurs when a developer exposes a reference to an internal implementation object, such as a file, directory, or database key. Without an access control check or other protection, attackers can manipulate these references to access unauthorized data.",
-              "more",
+              "Direct object reference flaws result in objects and documents being unintentionally accessible as it is not properly protected. From the design perspective this usually means that requests can be made to specific objects without the authentication needed to reach this content. This usually is a result of web developers thinking that users will only seek content that is intended for them, which is where it starts to go wrong- even a simple Google search can give you access to confidential goverment documents- try entering the following to the search bar:  filetype:doc | filetype:pdf " + "this document is confidential"+ " site:gov  ",
               "more",
               "more",
               "/pure-lesson-pages/insecure-objects.html"
@@ -66,7 +66,7 @@ def populate():
               "lol",
               "lol",
               "lol",
-              "/pure-lesson-pages/sensitive-data.html"
+              "/pure-lesson-pages/sensitive-data-continuance.html"
               )
               
     addLesson("Cross-Site Scripting",
