@@ -38,35 +38,15 @@ def populate():
               "Sanitisation of text input can ensure that no SQL syntax is passed into your system.",
               "/pure-lesson-pages/sql-injection.html"
               )
-              
-    addLesson("Heuristics",
-              "Lessons/fail.jpg",
-              100,
-              "While it is important to ensure that your code is secure, information sent back to the client could also pose a vulnerability to your system.",
-              "lol",
-              "lol",
-              "lol",
-              "lol"
-              )
              
     addLesson("Insecure Direct Object References",
               "Lessons/lock.jpg",
               1000,
               "A direct object reference occurs when a developer exposes a reference to an internal implementation object, such as a file, directory, or database key. Without an access control check or other protection, attackers can manipulate these references to access unauthorized data.",
-              "more",
-              "more",
-              "more",
+              "Direct object reference flaws result in objects and documents being unintentionally accessible as it is not properly protected. From the design perspective this usually means that requests can be made to specific objects without the authentication needed to reach this content. This usually is a result of web developers thinking that users will only seek content that is intended for them, which is where it starts to go wrong- even a simple Google search can give you access to confidential goverment documents- try entering the following to the search bar:       filetype:doc | filetype:pdf " + "this document is confidential"+ " site:gov  ",
+              "This next demonstration assumes you have already logged into a sample bank system. As you will see, the database key is exposed in a URL and can be easily manipulated, granting access to information about other accounts, without proper authorisation",
+              "The main weakness here is the access control. The application should always verify that this user is authorised to access that object once it involves sensitive content. Once you get this right, other mitigation techniques might seem redundant. However, depending on the context of your application, you might want to protect yourself from similar exploits. Don’t expose the actual ID/name of objects to the end user. And if for some reason you have to, something like an Indirect Reference Map can be used to create alternative keys for application side objects, such that the original database keys are never visible.  This should also minimize user ability to predict object keys if done neatly",
               "/pure-lesson-pages/insecure-objects.html"
-              )
-              
-    addLesson("Sensitive Data",
-              "Lessons/Feather1.jpg",
-              500,
-              "A lesson on sensitive data.",
-              "lol",
-              "lol",
-              "lol",
-              "/pure-lesson-pages/sensitive-data.html"
               )
               
     addLesson("Cross-Site Scripting",
@@ -93,10 +73,30 @@ def populate():
               "Lessons/Authentification_1.jpg",
               100,
               "Broken Authentication and Session Management is one of those common web application vulnerabilities which are less known but dangerous. According OWASP, this vulnerability is third most found vulnerability on the web application. This is quite a broad field, however most commonly exploited issue is found in the web applications where developers fail to protect users’ session information.",
-              "Authenticating to a website is something most of us probably do multiple times every day. Look at your open tabs right now! You probably have your Facebook, GitHub, some email client open? Each one these individually authenticated to.\n\nAs a developer, it is your duty to secure both, your users current session and any persistent data – such as credentials. If a hacker can get a hold of users session ID, he can replicate it in a URL or a cookie and effectively become his victim without needing a username or password.\n\nIn this lesson we shall be focusing some key points:\n\nUnsecure and easily accessible Session ID's, weak security in forgotten password, remember my password, account update, and other related functions",
-              "In this example we will be getting past the mock login componet and login in as our victim. We will be exploiting the fact that this application does not use cokies to hold the session ID it can be easily obtained to mimic our victim and get past the authentification.",
-              "Since there is a trade off between security and usability of application, you can never prevent Broken Authentication or Session theft completely (would you like this site to remember and autocomplete your login/password?).\n\nHowever, we can mitigate most of these flaws by putting some good engineering practices in place:\nAvoid cookieless sessions\nDo not try to build an authentification system yourself unless you have to\nExpire sessions early and often(depending on sensitivity of the user data your application will hold)\nUse unique session IDs everytime (do not re use the same ID)\nAdd IP checking\nDouble check passwords or other security information on certain activities(ex bank transfer)\nUse SSL",
+              "Authenticating to a website is something most of us probably do multiple times every day. Look at your open tabs right now! You probably have your Facebook, GitHub, some email client open? Each one these individually authenticated to. As a developer, it is your duty to secure both, your users current session and any persistent data – such as credentials. If a hacker can get a hold of users session ID, he can replicate it in a URL or a cookie and effectively become his victim without needing a username or password.",
+              "In this example we will be getting past the mock login componet and login in as our victim. We will be exploiting the fact that this application does not use cookies to hold the session ID, which can be easily obtained to mimic our victim and get past the authentification.",
+              "Since there is a trade off between security and usability of application, you can never prevent Broken Authentication or Session theft completely. Depending on sensitivity of the user data your application will hold, consider the following mitigation techniques: Avoid cookie-less sessions,  Do not try to build an authentication system yourself unless you know what you are doing,  Encrypt your cookies to make sessionID harder to fake,  Expire sessions early and often,  Use unique IDs every time (do not re use the same ID),  Add IP checking,  Double check passwords or other security information on certain activities(ex. bank transfer)",
               "/pure-lesson-pages/stolen-session-demo.html",
+              )
+
+    addLesson("Sensitive Data, Exposure & Encryption (Unavailable)",
+              "Lessons/sensitive.png",
+              500,
+              "A lesson on sensitive data is still being developed",
+              "lol",
+              "lol",
+              "lol",
+              "/pure-lesson-pages/sensitive-data-continuance.html"
+              )
+
+    addLesson("Heuristics (Unavailable)",
+              "Lessons/fail.jpg",
+              100,
+              "(lesson being developed) While it is important to ensure that your code is secure, information sent back to the client could also pose a vulnerability to your system.",
+              "lol",
+              "lol",
+              "lol",
+              "lol"
               )
               
 if __name__ == "__main__":

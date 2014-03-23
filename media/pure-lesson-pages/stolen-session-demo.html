@@ -35,7 +35,8 @@ Might consider breaking down into individual modules for easier maintance.
         $("#slide6").hide();
         $("#slide7").hide();
         $("#slide8").hide();
-        $('#implementDemoComplete').hide();
+        $("#outro").hide();
+        //$('#implementDemoComplete').hide();
 
 	$("#Done").click(function()
 		{$("#Demo").hide();$('#implementDemoComplete').fadeIn();});
@@ -185,9 +186,16 @@ Might consider breaking down into individual modules for easier maintance.
           <button onclick='$("#slide6").slideDown(1000); $("#n7").fadeIn(); $("#b7").fadeIn(); 
           $("#slide8").fadeOut(1750); $("#b8").hide()' id="b8">Back</button>
 
-          <button onclick=''
-           id="Done">Finish</button>
+          <button onclick="$('#slide7').hide(); $('#slide8').hide(); $('#n8').hide(); $('#b8').hide(); 
+          $('#outro').fadeIn(); $('#implementDemoComplete').fadeIn();">Finish</button>
       </p>
+    </div>
+
+    <div id="outro">
+    </p>
+      Just imagine the possibilities – depending on the site, it could host all kinds of private data- from the actual name of your victim, to his phone or date of birth... (We will talk more about this in the Sensitive Data Exposure lesson) Bottom line is- as a developer, you should make your sessionIDs as tough as possible.
+    <p>
+
     </div>
 
  </body>
