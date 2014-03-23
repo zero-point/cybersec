@@ -79,24 +79,24 @@ def populate():
               "/pure-lesson-pages/stolen-session-demo.html",
               )
 
-    addLesson("Sensitive Data, Exposure & Encryption (Unavailable)",
+    addLesson("Sensitive Data, Exposure and Encryption (Unavailable)",
               "Lessons/sensitive.png",
               500,
               "A lesson on sensitive data is still being developed",
+              "comming soon",
+              "It is not ready yet!",
               "lol",
-              "lol",
-              "lol",
-              "/pure-lesson-pages/sensitive-data-continuance.html"
+              "/pure-lesson-pages/unavailable.html"
               )
 
     addLesson("Heuristics (Unavailable)",
               "Lessons/fail.jpg",
               100,
               "(lesson being developed) While it is important to ensure that your code is secure, information sent back to the client could also pose a vulnerability to your system.",
+              "comming soon",
+              "It is not ready yet!",
               "lol",
-              "lol",
-              "lol",
-              "lol"
+              "/pure-lesson-pages/unavailable.html"
               )
               
 if __name__ == "__main__":
