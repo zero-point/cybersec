@@ -79,7 +79,7 @@ def populate():
               "/pure-lesson-pages/stolen-session-demo.html",
               )
 
-    addLesson("Sensitive Data. Exposure and Encription(Unavailable)",
+    addLesson("Sensitive Data, Exposure & Encryption (Unavailable)",
               "Lessons/sensitive.png",
               500,
               "A lesson on sensitive data is still being developed",
