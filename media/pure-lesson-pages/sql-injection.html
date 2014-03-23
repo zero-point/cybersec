@@ -103,7 +103,7 @@ Last Modified       4 March 2014
     </p>
 </div>
 
-<!-- Demo Explanation --------------------------------------------------------->
+<!-- Demo Explanation -------------------------------------------------------->
 <div id="explanationOfSQL">
     <p>The form you have just completed allows you to log into our system by
     performing an SQL query on our database. The code for this query is as
@@ -173,14 +173,14 @@ Last Modified       4 March 2014
     append an apostrophe at the end of the entry.</p>
 </div>
 
-<!-- Completion Message ------------------------------------------------------->
+<!-- Completion Message ----------------------------------------------------- -->
 <div id="exploitationFinished">
     <p>
     This input will execute the following SQL command:
     </p>
     <p>
         <center><code>
-            SELECT * FROM Account WHERE id = accountNo AND password = abc' OR 1=1
+            SELECT * FROM Account WHERE id = accountNo AND password = 'abc' OR 1=1
             OR password='abc'
         </code></center>
     </p>
