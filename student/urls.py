@@ -18,4 +18,5 @@ from student import views
 urlpatterns = patterns('',
     url(r'^$', views.students, name='students'),
     url(r'^profile', views.student_profile, name='student_profile'),
+    url(r'^edit_profile', views.edit_profile, name='edit_profile'),
 )     

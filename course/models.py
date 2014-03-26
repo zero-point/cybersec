@@ -65,7 +65,7 @@ class PictureResource(Resource):
 class WebResource(Resource):
         location = models.URLField()
         
-# Housekeepiny -----------------------------------------------------------------
+# Housekeeping -----------------------------------------------------------------
 
 class LessonCompletions(models.Model):
     user    = models.ForeignKey(User)

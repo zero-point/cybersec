@@ -9,12 +9,6 @@
         for (var i = p_elements.length - 1; i >= 0; i--) {
             p_elements[i].innerHTML = p_elements[i].innerHTML.replace(unixNewLine, '<br/>');
         }
-
-        $("#edit").click(function() {
-            u = User.objects.get(email__exact=user.email);
-            u.set_password(document.getElementById('pass'));
-            u.save();
-        });
     }
 </script>
 {% endblock %}
@@ -33,18 +27,19 @@
 <div class="col-md-4">
 <h3><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;My Details</h3>
 <table class="table">
-<tr><td>Forename</td><td>{{ user.first_name }}</td></tr>
-<tr><td>Surname</td><td>{{ user.last_name }}</td></tr>
-<tr><td>Email Address</td><td>{{ user.email }}</td></tr>
-<tr><td>Total Points</td><td>{{ points }}</td></tr>
-<tr><td colspan="2"><center><a class="btn btn-default" href="/student/edit_profile"><span class="glyphicon glyphicon-edit"></span>&nbsp;Edit my Account</a></center></td></tr>
-<tr><td colspan="2"><center><a class="btn btn-danger" href="{% url 'delete'%}"><span class="glyphicon glyphicon-remove"></span>&nbsp;Delete my Account</a></center></td></tr>
-</table><br/>
-<h3><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Completed Lessons</h3>
-<table class="table">
-{% for lesson in lessons %}
-<tr><td>{{ lesson }}</td></tr>
-{% endfor %}
+{% if done %}<div class="alert alert-success"><strong>Success</strong>&nbsp;Your details have been saved.</div>{% endif %}
+<form role="form" action="" method="post">
+{% csrf_token %}
+<tr><td>Forename</td><td><input type="text" id="newfirstname" name="newfirstname"></td></tr>
+<tr><td>Surname</td><td><input type="text" id="newlastname" name="newlastname"></td></tr>
+<tr><td>Email Address</td><td><input type="text" id="newemail" name="newemail"></td></tr>
+<tr><td colspan="2"><center><div class="form-group">
+<a href="/student/profile">
+<input type="button" class="btn btn-primary" value="Back" /></a>
+<input type="submit" class="btn btn-primary" value="Done" />
+</div>
+</center></td></tr>
+</form>
 </table>
 </div>
 <div class="col-md-4">

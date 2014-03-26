@@ -13,6 +13,7 @@ __version__     = "1.0"
 __status__      = "Development"
 
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.template import RequestContext, loader
 from course.models import User, LessonCompletions
 from django.contrib.auth.decorators import login_required
@@ -69,3 +70,24 @@ def student_profile(request):
 def logout_user(request):
     logout(request)
     return redirect("lessons")
+
+@login_required
+def delete_user(request):
+    request.user.delete()
+    return redirect("lessons")
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    context = RequestContext(request)
+    details = {}
+
+    if request.method == 'POST':
+        user.first_name = request.POST["newfirstname"]
+        user.last_name = request.POST["newlastname"]
+        user.email = request.POST["newemail"]
+        user.save()
+        details = {"user": user, "done" : True}
+
+    template = loader.get_template('student/edit_profile.html')
+    return render_to_response('student/edit_profile.html', details, context)

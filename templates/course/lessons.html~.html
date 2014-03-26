@@ -1,0 +1,80 @@
+<!--
+
+Lesson Directory Page
+
+Display the list of available lessons, and any associated points for each
+lesson.
+
+Author          Joshua McGhee, Donald Martin (for Team P, University of Glasgow)
+Version         1.0
+Last Modified   4 March 2014
+-->
+
+{% extends "base.html" %}
+{% block title %}Lessons - {{block.super}}{%endblock%}
+{% block header %}
+
+{% if authenticated %}
+    <li><a href="{% url 'logout'%}">Logout</a></li>
+{% endif %}
+{% endblock %}
+
+<!-- Page Content ------------------------------------------------------------->
+{% block content %}
+<div class="container" style="padding-top: 75px">
+
+    <!-- Header -->
+    <h1>
+        <strong>Lessons</strong>
+        <br />
+        <small>Pick a lesson to continue</small>
+    </h1>
+
+    <!-- Display the list of lessons -->
+    {% for lesson in lessons %}
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-8">
+                <h3>
+                    
+                    
+                    {% if lesson.title in completed%}
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <em>{{lesson.title}} has been completed </em>
+                    {% else %}
+                    {{lesson.title}}
+                    {% endif %}
+                    <br />
+                    <small>
+                        <span class="glyphicon glyphicon-tags" /> 
+                        {{lesson.award}}
+                    </small>
+                </h3>
+                
+                <p>{{lesson.description}}</p>
+                
+                <!-- Selection Button -->
+                <p>
+                    {% if lesson.title in completed%}
+                    <button class="btn btn-warning" onclick="window.location.href='/lessons/res/?title={{lesson.title}}'">
+                        <span class="glyphicon glyphicon-play-circle"></span>&nbsp;Take Lesson
+                    </button>
+                    {% else %}
+                    <button class="btn btn-primary" onclick="window.location.href='/lessons/res/?title={{lesson.title}}'">
+                        <span class="glyphicon glyphicon-play-circle"></span>&nbsp;Take Lesson
+                    </button>
+                    {% endif %}
+                </p>
+            </div>
+            
+            <!-- Course Picture -->
+            <div class="col-xs-6 col-md-4">
+                <img class="img-thumbnail" src={{MEDIA_URL}}{{lesson.image}} style="width:100%" />
+            </div>
+        </div>
+
+        <br />
+        <hr />
+        <br />
+    {% endfor %}
+</div>
+{% endblock %}
