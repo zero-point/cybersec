@@ -130,3 +130,12 @@ def lesson_page(request):
 def logout_user(request):
     logout(request)
     return redirect("/")
+
+# Delete User ------------------------------------------------------------------
+#
+# Check that user is logged in & delete them from the system
+
+@login_required
+def delete_user(request):
+    request.user.delete()
+    return redirect("/")
