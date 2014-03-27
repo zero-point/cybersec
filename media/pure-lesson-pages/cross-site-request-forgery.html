@@ -109,7 +109,10 @@ Last Modified       23 January 2014
 <div id="exploitationOfCSRF">
 
     <p>To help you visualise the attack you can construct a malicious request and submit it through the form.</p>
-	<p>Try entering an HTTP GET request in the text box: (e.g. &lt;img src="http://bank.com/transfer.do?acct=MARIA&amount=100000" width="1" height="1" border="0">)</p>
+	<p>Try entering something like the following request in the text box: (e.g. &lt;img src="http://cdn0.dailydot.com/cache/d7/04/d704ec63f0d6e86b9900461a187eee26.jpg" width="30%" height="30%">)</p>
+	<p>
+	   You can also try entering text ("hello world" all over again?) or any other valid HTTP request!
+	</p>
 	<input type="text" id="userInput"/>
 	<input type="submit" id="Display" value="Submit">
 
