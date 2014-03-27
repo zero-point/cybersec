@@ -108,14 +108,13 @@ Last Modified       23 January 2014
 
 <div id="exploitationOfCSRF">
 
-    <p>To help you visualise the attack you can construct a malicious request and submit it through the form.</p>
-	<p>Try entering something like the following request in the text box: (e.g. &lt;img src="http://cdn0.dailydot.com/cache/d7/04/d704ec63f0d6e86b9900461a187eee26.jpg" width="30%" height="30%">)</p>
-	<p>
-	   You can also try entering text ("hello world" all over again?) or any other valid HTTP request!
-	</p>
-	<input type="text" id="userInput"/>
-	<input type="submit" id="Display" value="Submit">
+    <p>To show you how such an attack could occur, construct a malicious request and submit it through the form.</p>
+	<p>Try entering something similar to the following request in the text box: (<strong>please keep in mind that clicking the picture will log you out</strong>)</p>
+    <p>e.g. &lt;a href="/lessons/logout">&lt;img src="http://openclipart.org/image/300px/svg_to_png/169834/Click-Here-to-Get-Your-Copy.png" />&lt;/a></p>
 
+	<input type="text" id="userInput"/>
+    <input type="submit" id="Display" value="Submit">
+    <br/><br/>
     <span id="result"></span>
 	<div id="Success">
         <br/><button id="Done">Done</button>

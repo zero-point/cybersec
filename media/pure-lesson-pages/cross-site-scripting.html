@@ -51,7 +51,8 @@ Last Modified       20 January 2014
 
 	$("#Display").click(function() {
             var input = document.getElementById("userInput").value;
-            if (input.length === 0 || input.indexOf('alert(') < 0) {
+            document.getElementById('result').innerHTML = input;
+            if (input.length === 0) {
                 alert("Please enter an alert like in the example"); // submitted input not an alert command
             }
             else{
@@ -110,12 +111,14 @@ Last Modified       20 January 2014
 <div id="exploitationOfXSS">
 
 
-    <p>A simple way to show you how it works is to have a form that takes input and then executes it.</p>
+    <p>A simple way to help you visualise it is to have a form that takes input and then executes it.</p>
 
-	<p>Try entering an alert in the text box: (e.g. alert('hello world'))</p>
+	<p>Try entering an alert in the text box: (e.g. alert('XSS'))</p>
 	<input type="text" id="userInput"/>
 	<input type="submit" id="Display" value="Submit">
-<br/>
+    <br/><br/>
+
+    <span id="result" strong></span>
 	<div id="Success">
         <br/>
 		<button id="Done">Done</button>
