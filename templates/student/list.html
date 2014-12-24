@@ -1,19 +1,14 @@
 <!--
 
-Student directory
-
 Page to display a list of users, and some basic information. Similar
 format to a telephone directory.
 
 Each user can be clicked upon to open a new page with more details.
-
-Author              Glasgow University 2013/14 (L3: Team P)
-Last Modified       13 Dec 2013
 -->
 
 <!-- Some Django Header Info -->
 {% extends "base.html" %}
-{% block title %}Students - {{block.super}}{%endblock%}
+{% block title %}Users - {{block.super}}{%endblock%}
 {% block header %}
     <!-- Go to login page if not logged in -->
 	{% if authenticated %}
@@ -21,7 +16,7 @@ Last Modified       13 Dec 2013
 	{% endif %}
 {% endblock %}
 
-<!-- Loop through all students -->
+<!-- Loop through all users -->
 {% block content %}
 <div class="container" style="padding-top: 75px">
 <table class="table">

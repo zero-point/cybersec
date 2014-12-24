@@ -7,11 +7,6 @@ Getting requests from users and forwarding them onto the appropriate page
 
 """
 
-__author__      = "Arnas Binkauskas, Donald Martin, Josh McGhee & Irina Preda"
-__copyright__   = "Copyright 2014, University of Glasgow, Team P"
-__version__     = "1.0"
-__status__      = "Development"
-
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext, loader

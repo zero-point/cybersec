@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Brainstorm</title>
+<link rel="shortcut icon" type="image/png" href="favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" />
+
+<style type="text/css">
+#column1-wrap {
+    float: left;
+    width: 100%;
+}
+#column1 {
+    margin-right: 200px;
+}
+#column2 {
+    float: left;
+    width: 200px;
+    margin-left: -200px;
+}
+
+#feedback {
+     transition:width 1s;
+     -moz-transition:width 1s; /* Firefox 4 */
+     -webkit-transition:width 1s; /* Safari and Chrome */
+     -o-transition:width 1s; /* Opera */
+     background: #3399cc url(feedback.png) no-repeat 35% 50%;
+     position:fixed;
+     width:30px;
+     height:150px;
+     top:30%;
+     right:0px;
+}
+
+#feedback:hover
+{
+     width:50px;
+}
+</style>
+
+<style type="text/css">
+.editable {
+text-color: black;
+	background: white;
+    margin-top: 5px;
+    margin-left: 5px;
+    height: 200px;
+    width: 350px;
+    cursor: text;
+    padding: 10px;
+}
+
+.modal {
+	margin-left: 0;
+	margin-top: 0px;
+	left: 10px;
+	top: 10px;
+	width: 400px;
+}
+
+.sector-label {
+	cursor:pointer;
+}
+.sector-label-edit {
+	display:none;
+}
+.edit .sector-label {
+	display:none;
+}
+.edit .sector-label-edit {
+	display:block;
+}
+</style>
+<script type="text/javascript" src="scripts/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="scripts/html2canvas.js"></script>
+<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="scripts/underscore.js"></script>
+<script type="text/javascript" src="scripts/backbone.js"></script>
+<script type="text/javascript" src="scripts/cake.js"></script>
+<script type="text/template" id="popup-template">
+<div class="modal sector-popup">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">&times;</a>
+		<% if (label) { %>
+			<div class="sector-label"><h3 style="display:inline"><%= label %></h3> <i class="icon-pencil"></i></div>
+			<p class="sector-label-edit"><input type="text" class="input-xlarge" ></p>
+		<% } %>
+	</div>
+	<form class="form-vertical">
+		<div class="modal-body">
+			<h4>Split into how many ideas?</h4>
+			<p>&nbsp;</p>
+			<div class="control-group">
+				<div class="controls"><input type="text" class="input-xlarge" placeholder="Just one idea: the more the merrier!"></div>
+				<div class="controls"><input type="text" class="input-xlarge" placeholder="Two ideas: not bad, doing well"></div>
+				<div class="controls"><input type="text" class="input-xlarge" placeholder="Three ideas: you're getting the hang of it"></div>
+				<div class="controls"><input type="text" class="input-xlarge" placeholder="Four ideas: starting to expand"></div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<input id="submitBtn" type="submit" class="btn btn-primary" value="Add ideas" />
+			<a href="#" class="btn" data-dismiss="modal">Close</a>
+		</div>
+	</form>
+</div>
+</script>
+
+<script src="scripts/jquery.jeditable.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	$(document).ready(function() {
+		$('.edit').editable('file:///home/futurenode/workspace/final-brainstorm/brainstorm.html/save.php', {
+ 			indicator : 'Saving...',
+			tooltip   : 'Click to edit...'
+		});
+		
+		$('.edit_area').editable('http://zero-point.github.io/brainstorm/save.php', { 
+			type      : 'textarea',
+			cancel    : 'Cancel',
+			submit    : 'OK',
+			indicator : '<img src="img/indicator.gif">',
+			tooltip   : 'Click to edit...'
+		});
+	});
+</script>
+
+<script type="text/javascript">
+var RADIUS = 50;
+var CANVAS, MID_X, MID_Y = null;
+
+
+function getRandomColor() {
+	return '#' + (function co(lor){ return (lor += [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'][Math.floor(Math.random()*16)]) && (lor.length == 6) ?  lor : co(lor); })('');
+}
+
+/**
+ * HSV to RGB color conversion
+ *
+ * H runs from 0 to 360 degrees
+ * S and V run from 0 to 100
+ * 
+ * Ported from the excellent java algorithm by Eugene Vishnevsky at:
+ * http://www.cs.rit.edu/~ncs/color/t_convert.html
+ */
+function hsvToRgb(h, s, v) {
+	var r, g, b;
+	var i;
+	var f, p, q, t;
+	
+	// Make sure our arguments stay in-range
+	h = Math.max(0, Math.min(360, h));
+	s = Math.max(0, Math.min(100, s));
+	v = Math.max(0, Math.min(100, v));
+	
+	// We accept saturation and value arguments from 0 to 100 because that's
+	// how Photoshop represents those values. Internally, however, the
+	// saturation and value are calculated from a range of 0 to 1. We make
+	// That conversion here.
+	s /= 100;
+	v /= 100;
+	
+	if(s == 0) {
+		// Achromatic (grey)
+		r = g = b = v;
+		return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+	}
+	
+	h /= 60; // sector 0 to 5
+	i = Math.floor(h);
+	f = h - i; // factorial part of h
+	p = v * (1 - s);
+	q = v * (1 - s * f);
+	t = v * (1 - s * (1 - f));
+
+	switch(i) {
+		case 0:
+			r = v;
+			g = t;
+			b = p;
+			break;
+			
+		case 1:
+			r = q;
+			g = v;
+			b = p;
+			break;
+			
+		case 2:
+			r = p;
+			g = v;
+			b = t;
+			break;
+			
+		case 3:
+			r = p;
+			g = q;
+			b = v;
+			break;
+			
+		case 4:
+			r = t;
+			g = p;
+			b = v;
+			break;
+			
+		default: // case 5:
+			r = v;
+			g = p;
+			b = q;
+	}
+	
+	return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
+
+$(function() {
+
+CANVAS = new Canvas($("#canvas-container").get(0), $(window).width(), $(window).height()+1);
+CANVAS.makeDraggable();	
+//TODO bind on window resize: http://stackoverflow.com/questions/4037212/html-canvas-full-screen
+console.log(CANVAS);
+MID_X = CANVAS.width/2;
+MID_Y = CANVAS.height/2;
+
+window.Sector = Backbone.Model.extend({
+	initialize: function() {
+		this.set("level", this.get("parent") ? this.get("parent").get("level")+1 : 0);
+		this.set({
+			radius: (this.get("level")+0.5) * RADIUS, //TODO make nice
+			children: new (Backbone.Collection.extend({ model : Sector })),
+			offsetAngle: this.get("parent") ? this.get("parent").get("offsetAngle") : 0,
+			angle: this.get("parent") ? this.get("parent").get("angle") : Math.PI*2,
+			view: new SectorView({ model: this })
+		});
+		this.on("change:offsetAngle change:angle", this.setChildPositions, this);
+		this.get("children").on("add", this.setChildPositions, this);
+	},
+
+    toggle: function() {
+      this.save({done: !this.get("done")});
+    },
+	
+	setLabel: function(label) {
+		this.set("label", label);
+	},
+	
+	addChildClockwiseOf: function(childNumber, label) {
+		var child = new Sector({ label: label, parent: this });
+		this.get("children").add(child); //TODO at correct index
+		return child;
+	},
+
+	addChildAnticlockwiseOf: function(childNumber, label) {
+		return this.addChildClockwiseOf((childNumber-1) % this.get("children").length, label);
+	},
+	
+	addChild: function(label) {
+		return this.addChildClockwiseOf(this.get("children").length-1, label);
+	},
+	
+	setChildPositions: function() {
+		var childOffsetAngle = this.get("offsetAngle");
+		var childAngle = this.get("angle")/this.get("children").length;
+
+		this.get("children").each(function(child) {
+			child.set({
+				angle: childAngle,
+				offsetAngle: childOffsetAngle
+			});
+			childOffsetAngle += childAngle
+		});
+	},
+	
+	addClockwise: function() {
+		alert("addClockwise");
+	},
+});
+
+var root = new Sector({
+	label: ""
+});
+});
+
+window.FormPopup = Backbone.View.extend({
+	template: _.template($('#popup-template').html()),
+	
+	events: {
+		"dblclick .sector-label" : "edit",
+		"keypress .sector-label-edit input" : "setLabel"
+    		},
+	
+	render: function() {
+		var view = this;
+
+		this.$el.html(this.template(this.model.toJSON()));
+		this.$el.modal({
+			backdrop: false
+		});
+		this.$el.on("hidden", function() {
+			view.remove();
+		});
+
+		this.$el.find("form").submit(function() {
+			$(this).find("input:text").each(function() {
+				var label = $(this).val();
+				if (label.length > 0){
+						view.model.addChild(label);
+				}
+			});
+			view.$el.modal("hide");
+			return false;
+		});
+	},
+
+	edit: function() {
+		this.$el.addClass("edit");
+		this.$el.find(".sector-label-edit input").focus();
+	},
+	
+	setLabel: function(e) {
+		if (e.keyCode != 13)
+			return;
+		var newLabel = this.$el.find(".sector-label-edit input").val();
+		this.model.set("label", newLabel);
+		//document.getElementById('title').innerHTML = newLabel;
+		this.$el.find(".sector-label h3").html(newLabel);
+		this.$el.removeClass("edit");
+	},
+});
+
+window.SectorView = Backbone.View.extend({
+	initialize: function() {
+		this.model.bind("change", this.render, this);
+		this.model.bind('destroy', this.remove, this);
+		this.setElement(null);
+	},
+	
+	events: {
+		"mouseover": "popOut",
+		"mouseout": "popIn",
+		"dblclick": "showInfo",
+    },
+	
+	render: function() {
+		var radius = this.model.get("radius");
+		var circle;
+		if (this.model.get("level") == 0) {
+			if (this.el != null) return;
+			circle = new Circle(radius, {
+				x: CANVAS.width/2,
+				y: CANVAS.height/2,
+				fill: getRandomColor(),
+			});
+			this.setElement(circle);
+			CANVAS.append(this.el);
+		} else {
+			var offsetAngle = this.model.get("offsetAngle");
+			var angle = this.model.get("angle");
+
+			if (this.el == null) {
+				circle = new Circle(radius, {
+					x: CANVAS.width/2,
+					y: CANVAS.height/2,
+					startAngle: offsetAngle + angle,
+					endAngle: offsetAngle + angle,
+					zIndex: -this.model.get("level"),
+					includeCenter:true,
+				});
+				this.setElement(circle);
+				CANVAS.append(this.el);
+			}
+
+			this.el.fill = hsvToRgb((offsetAngle+angle/2)*180/Math.PI, 22, 200); //100-((this.model.get("level")-1)*10)); //TODO make nice
+			this.el.animateTo('startAngle', offsetAngle, 500, 'sine');
+			this.el.animateTo('endAngle', offsetAngle + angle, 500, 'sine');
+			
+			var xx = radius * Math.sin(Math.PI/2 + offsetAngle + angle/2);
+			var yy = -radius * Math.cos(Math.PI/2 + offsetAngle + angle/2);
+			
+			var text = this.el.getElementById("text");
+			if (text == null) {
+				text = new TextNode(Drawable, {
+					id: "text",
+					maxWidth:50,
+					cx: xx,
+					cy: yy,
+					fill: "#000",
+				});
+				this.el.append(text);
+			}
+			
+			text.text = this.model.get("label");
+			text.animateTo('cx', xx, 10, 'linear');
+			text.animateTo('cy', yy, 10, 'linear');
+		}
+	},
+	
+	popOut: function() {
+		this.el.animateTo('scale', 1.1, 100, 'linear');
+	},
+	
+	popIn: function() {
+		this.el.animateTo('scale', 1, 100, 'linear');
+	},
+	
+	showInfo: function() {
+		new FormPopup({ model: this.model }).render();
+	},
+	
+});
+$(function(){
+
+      $(".editable").keypress(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+
+             if (document.selection) {
+                document.selection.createRange().pasteHTML("");
+             } else {
+                $(this).append("");
+             }
+        }
+    });
+});
+
+function sendFeedback() {
+    var link = "mailto:irina@360strategy.co.uk"
+             + "?subject=" + escape("Feedback")
+	     + "&body=What did you think?"
+    ;
+
+    window.location.href = link;
+}
+
+function sendByMail() {
+    var link = "mailto:" + "?subject=" + escape("Here's my Brainstorm!") + "&body=";
+    ;
+
+    window.location.href = link;
+}
+</script>
+
+</head>
+<body>
+
+<div style="padding:15px; position: absolute; min-width: 1300px">
+	<div id="column1-wrap"><div id="column1" ><b><h3><div id="title" class="editable" style="display:inline;border-style:solid;border-width:1px;font-family:"Times New Roman", Times, serif;" onClick="this.contentEditable='true';">Brainstorm</div></h3></b><br/>
+					
+				</div>
+	</div>
+	<div id="column2" style="position: fixed; top: 1em; right: 1em;">
+		<div class="dropdown">
+			<div class="btn-group">			
+				<button type="button" id="btnSave" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star"></span><b>Download</b></button>
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					<span class="caret"></span>
+					<span class="sr-only"><b>Share</b></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sendByMail(); return false">Email</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Twitter</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Facebook</a></li>
+				</ul>
+			</div>			
+		</div>
+	</div>
+</div>
+
+<div id="feedback" href="#" onclick="sendFeedback(); return false"></div>
+<div id="canvas-container"></div>
+<div class="btn-group" style="position:fixed; bottom: 1em; left: 1em;">
+						<button type="button" id="plus" class="btn btn-default btn-lg"><b>+</b></button>
+						<button type="button" id="return" class="btn btn-default btn-lg"><b>o</b></button>
+						<button type="button" id="minus" class="btn btn-default btn-lg"><b><b>-</b></b></button>
+					</div>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap-modal.js"></script>
+<script>
+	var button = document.getElementById('btnSave');
+	button.addEventListener("click", function() {
+		html2canvas(document.getElementById('canvas-container'), {
+    			onrendered: function(canvas) {
+				var img = canvas.toDataURL("image/png");
+    				var url = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+				location.href = url;
+  			}
+		});    
+	});
+	var plusButton = document.getElementById('plus');
+	plusButton.addEventListener("click", function() {
+	CANVAS.scale += 0.1;
+	console.log(CANVAS.x);
+	});
+	
+	var minusButton = document.getElementById('minus');
+	minusButton.addEventListener("click", function() {
+	CANVAS.scale -= 0.1;
+	});
+
+	var returnButton = document.getElementById('return');
+	returnButton.addEventListener("click", function() {
+	CANVAS.scale = 1; //center
+	CANVAS.redraw(); //erase traces of past canvas
+	});
+</script>
+</body>
+</html>

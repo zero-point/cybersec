@@ -1,138 +1,38 @@
-<!--
-
-Login Page
-
-Display a simple login page to the user.
-
-Author          Joshua McGhee, Donald Martin (for Team P, University of Glasgow)
-Version         1.0
-Last Modified   26 February 2014
--->
-
 {% extends "base.html" %}
 {% block content %}
+<div class="container-fluid" style="padding:0;">
+    <div class="col-md-7" style="padding:0;">
+    	<div style="position: relative; left: 0; top: 0;">
+    	    <img src="../media/resized_brainstorm360_context.png" style="position:relative; top:0; left:0; height: 100%; width:100%;">
+			<img src="../media/Brainstorm 360 quote.png" style="position:absolute; height:170; width:360; bottom:30px; left:40px;"/>
+		</div>
+    </div>
+   	<div style="height:5%;"></div>
+    <div class="col-md-3" style="margin-left:80;">
+    	<img src="../media/B360 - Logo.png">
+    	<div style="height:5%;"></div>
 
-<div class="jumbotron">
-    <div class="container">
-        <br/>
-        <blockquote>
-            <p>"If you want total security, go to prison. There you're fed, clothed,
-            given medical care and so on. The only thing lacking is freedom"</p>
-            <footer>Dwight D Eisenhower</footer>
-        </blockquote>
+    	<p class="customfont20">Unlock your ideas<p>
+    	<p class="customfont9">Brainstorm 360 is the easiest way to<br/> create new ideas and think differently<br/> about all your projects.<p>
+    	<div style="height:5%;"></div>
+
+    	<p class="customfont22">First time here? Let's take a quick tour.<p>
+    	<a href="tutorial"><img src="../media/Get started - button.png" style="border:none;" /></a>
+    	<div style="height:5%;"></div>
+
+    	<p class="customfont22">Back to brainstorm? Start expanding your ideas.</p>
+    	<a href="brainstorm"><img src="../media/Create a brainstorm - Button.png" style="border:none;" /></a>
+    	<div id="header" style="height:15%;"></div>
+
+    	<div>
+	    	<p class="customfont22">Share your experience with - we like to share any good stuff on Brainstorm 360's development.<p><br/>
+	    	<a class="customfont23" href="mailto:hello@weare360.co.uk">Email us</a>
+	    	<a class="customfont23" href="https://medium.com/@brainstorm360">Blog</a>
+	    	<a class="customfont23" href="http://weare360.co.uk/">About</a>
+	    	<a class="customfont23" href="https://www.facebook.com/weare360">Facebook</a>
+	    	<a class="customfont23" href="https://twitter.com/weare360uk">Twitter</a><br/><br/>
+	    	<a class="customfont21">&#169;2015 Brainstorm 360&nbsp;</a><a class="customfont21">Made by 360</a>
+    	</div>
     </div>
 </div>
-
-<div class="container">
-    <div class="col-md-12">
-        <h3><span class="glyphicon glyphicon-book"></span>&nbsp;Background</h3>
-            <p align="justify">
-                As we move to an ever increasing mobile technology oriented environment,
-                digital security is becoming increasingly important. More and more
-                people are switching to digital means of managing their day-to-day
-                lives, including online banking, electronic auctioning and even the
-                streaming of entertainment media over the Internet.
-            </p>
-            <p align="justify">    
-                Loss of client/customer data can have both financial, and reputational,
-                devastating consequences. The number of high-profile data breaches
-                has been on the rise over the past decade. And with the retirement
-                of one of the most widely deployed operating systems on the eve
-                of support withdrawal, it is surely set to continue into the next
-                decade.
-            </p>
-            <p align="justify">
-                As a result, software engineers have an increasing responsibility to
-                understand security issues in the applications that they develop. Not
-                only are we required to provide a system with extraordinary
-                functionality, but we are also required to safeguard against possible
-                attacks that may take place when our systems are in the wild.
-            </p>
-    </div>
-    </div>
-    <div class="container">
-    <div class="col-md-4">
-        <h3><span class="glyphicon glyphicon-screenshot"></span>&nbsp;What Will I Learn?</h3>
-        <p>
-            This system aims to familiarise you with the possible threats that
-            may face any applications you develop when it is released into
-            deployment.
-        </p>
-        <p>
-            At present, we aim to introduce you to:
-                <ul>
-                    <li>SQL Injection</li>
-                    <li>Cross-Site Scripting</li>
-                    <li>Request Forgery</li>
-                    <li>And much more</li>
-                </ul>
-        </p>
-    </div>
-    <div class="col-md-4">
-        <h3><span class="glyphicon glyphicon-pencil"></span>&nbsp;Where Can I Sign Up?</h3>
-        <p align="justify">
-            There are two ways in which you can obtain access to this educational
-            facility. Please select an option below to continue.
-        </p>
-        <center>
-            <p>
-                <a class="btn btn-primary" role="button" href="/register/individual">
-                    <span class="glyphicon glyphicon-user"></span>
-                    &nbsp;I am an individual</a>
-            </p>
-            <p>
-                <a class="btn btn-primary" role="button" href="/register/employee">
-                    <span class="glyphicon glyphicon-briefcase"></span>
-                    &nbsp;I am an employee</a>
-            </p>
-        </center>
-    </div>
-    <div class="col-md-4">
-        <h3><span class="glyphicon glyphicon-import"></span>&nbsp;Returning User?</h3>
-        <p align="justify">
-            If you have already registered with us, or your administrator has
-            created an account for you, please fill in the details below to access
-            the system.
-        </p>
-        <p>
-            {% if failedLogin %}
-    
-                <div class="alert alert-danger">
-                    <strong>Error</strong> Incorrect email/password. Please try again.
-                </div>   
-        
-            {% endif %}
-    
-            {% if inactiveAccount %}
-    
-                <div class="alert alert-warning">
-                    <strong>Warning</strong> Account inactive. Please contact an admin.
-                </div>   
-        
-            {% endif %}
-        </p>
-        <p>
-            <form role="form" action="/" method="post">
-            
-                {% csrf_token %}
-                
-                <div class="form-group">
-                    <label for="username">Email</label>
-                    <input type="email" class="form-control" placeholder="Please enter your email address" id="email" name="username" />
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" placeholder="Please enter your password" id="password" name="password" />
-                </div>
-                <div class="form-group">
-                    <center>
-                        <input type="submit" class="btn btn-primary" value="Log In" />
-                        <input type="hidden" name="next" value="{{ next|escape }}" />
-                    </center>
-                </div>
-            </form>
-        </p>
-    </div>
-</div>
-
 {% endblock %}

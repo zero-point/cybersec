@@ -7,12 +7,6 @@ Critical settings for Django.
 Further information @ docs.djangoproject.com
 
 """
-
-__author__      = "Arnas Binkauskas, Donald Martin, Josh McGhee & Irina Preda"
-__copyright__   = "Copyright 2014, University of Glasgow, Team P"
-__version__     = "1.0"
-__status__      = "Development"
-
 # Operating System -------------------------------------------------------------
 
 import os

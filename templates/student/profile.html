@@ -36,14 +36,14 @@
 <tr><td>Forename</td><td>{{ user.first_name }}</td></tr>
 <tr><td>Surname</td><td>{{ user.last_name }}</td></tr>
 <tr><td>Email Address</td><td>{{ user.email }}</td></tr>
-<tr><td>Total Points</td><td>{{ points }}</td></tr>
+<tr><td>Total Brainstorms</td><td>{{ points }}</td></tr>
 <tr><td colspan="2"><center><a class="btn btn-default" href="/student/edit_profile"><span class="glyphicon glyphicon-edit"></span>&nbsp;Edit my Account</a></center></td></tr>
 <tr><td colspan="2"><center><a class="btn btn-danger" href="{% url 'delete'%}"><span class="glyphicon glyphicon-remove"></span>&nbsp;Delete my Account</a></center></td></tr>
 </table><br/>
-<h3><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Completed Lessons</h3>
+<h3><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Past Brainstorms</h3>
 <table class="table">
-{% for lesson in lessons %}
-<tr><td>{{ lesson }}</td></tr>
+{% for brainstorm in brainstorms %}
+<tr><td>{{ brainstorm }}</td></tr>
 {% endfor %}
 </table>
 </div>

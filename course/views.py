@@ -6,12 +6,6 @@ views.py
 Getting requests from users and forwarding them onto the appropriate page
 
 """
-
-__author__      = "Arnas Binkauskas, Donald Martin, Josh McGhee & Irina Preda"
-__copyright__   = "Copyright 2014, University of Glasgow, Team P"
-__version__     = "1.0"
-__status__      = "Development"
-
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext, loader
 from course.models import *
@@ -24,7 +18,7 @@ def index(request):
     details = {"failedLogin": False, "inactiveAccount": False}
     
     if request.user.is_authenticated():
-        return HttpResponseRedirect("/lessons")
+        return HttpResponseRedirect("/brainstorm")
     else:
         if request.method == "POST":
             username = request.POST["username"]
@@ -34,7 +28,7 @@ def index(request):
             if user is not None:
                 if user.is_active:
                     auth_login(request, user)
-                    return HttpResponseRedirect("/lessons")
+                    return HttpResponseRedirect("/brainstorm")
                 else:
                     details["inactiveAccount"] = True
                     return render_to_response("course/index.html", details, context)  
@@ -80,6 +74,16 @@ def register_employee(request):
 #
 # Check that a user is logged in & display the webpage of lessons
 
+def brainstorm(request):	
+    context = RequestContext(request)
+    details = {"failedLogin": False, "inactiveAccount": False}
+    return render_to_response("course/brainstorm.html", details, context)
+
+def tutorial(request):    
+    context = RequestContext(request)
+    details = {"failedLogin": False, "inactiveAccount": False}
+    return render_to_response("course/tutorial.html", details, context)
+
 @login_required
 def lessons(request):
 	allLessons      = Lesson.objects.all()
@@ -90,7 +94,7 @@ def lessons(request):
 	for completion in completions:
 	    completedLessons.append(completion.lesson.title)
 	    
-	template        = loader.get_template('course/lessons.html')
+	template        = loader.get_template('course/brainstorm2.html')
 	authenticater   = request.user.is_authenticated()
 	
 	context         = RequestContext(request,
@@ -100,6 +104,7 @@ def lessons(request):
 	                                })
 	
 	return HttpResponse(template.render(context))
+
 
 # Lesson Page ------------------------------------------------------------------
 #
@@ -130,10 +135,6 @@ def lesson_page(request):
 def logout_user(request):
     logout(request)
     return redirect("/")
-
-# Delete User ------------------------------------------------------------------
-#
-# Check that user is logged in & delete them from the system
 
 @login_required
 def delete_user(request):

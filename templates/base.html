@@ -3,31 +3,524 @@
         <!-- Header Information ----------------------------------------------->
         <title>
             {% block title %}
-                Security Learning Tool
+		Brainstorm 360
             {% endblock %}
         </title>
         {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/B360-favicon.ico' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap-responsive.min.css' %}" />
+<style>
+@page { size: landscape; }
+
+a.tooltips {
+  position: relative;
+  display: inline;
+}
+a.tooltips span {
+  position: absolute;
+  width:140px;
+  color: #FFFFFF;
+  background: #000000;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  visibility: hidden;
+  border-radius: 6px;
+}
+a.tooltips span:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -8px;
+  width: 0; height: 0;
+  border-top: 8px solid #000000;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+a:hover.tooltips span {
+  visibility: visible;
+  opacity: 0.8;
+  bottom: 30px;
+  left: 50%;
+  margin-left: -76px;
+  z-index: 999;
+}
+
+ul {
+  text-align: left;
+  display: inline;
+  margin: 0;
+  padding: 15px 4px 0px 0;
+  list-style: none;
+
+}
+ul li {
+  display: inline-block;
+  margin-right: -4px;
+  position: relative;
+  padding: 0;
+  background: #f9fafa;
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+ul li:hover {
+
+}
+ul li ul {
+  position: absolute;
+  left:4px;
+  top: 25px;
+  width: 165px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transiton: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -transition: opacity 0.2s;
+}
+ul li ul li { 
+      padding: 15px 20px;
+
+  background: #fff; 
+  display: block; 
+  color: #000;
+  text-shadow: 0 -1px 0 #000;
+}
+ul li ul li:hover { background: #eee; }
+ul li:hover ul {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+</style>
+<style type="text/css">
+a{
+    color: inherit;
+    text-decoration: none;
+}
+img {
+    width:auto;
+    max-width:100%;
+    max-height:100%;
+    height:auto;
+}
+
+#column1-wrap {
+	float: left;
+width: 100%;
+}
+#column1 {
+	margin-right: 200px;
+}
+#column2 {
+float: left;
+width: 200px;
+       margin-left: -200px;
+height: 40px;
+}
+
+#feedback {
+transition:width 1s;
+	   -moz-transition:width 1s; /* Firefox 4 */
+	   -webkit-transition:width 1s; /* Safari and Chrome */
+	   -o-transition:width 1s; /* Opera */
+background: #3399cc url(feedback.png) no-repeat 35% 50%;
+position:fixed;
+width:30px;
+height:150px;
+top:30%;
+right:0px;
+}
+
+#feedback:hover
+{
+width:50px;
+}
+</style>
+
+<style type="text/css">
+.editable {
+text-color: black;
+        background: white;
+    margin-top: 5px;
+    margin-left: 5px;
+    height: 200px;
+    width: 350px;
+    cursor: text;
+    padding: 10px;
+}
+
+.modal {
+        margin-left: 0;
+        margin-top: 0px;
+        left: 10px;
+        top: 10px;
+        width: 400px;
+}
+
+.sector-label {
+        cursor:pointer;
+}
+.sector-label-edit {
+        display:none;
+}
+.edit .sector-label {
+        display:none;
+}
+.edit .sector-label-edit {
+        display:block;
+}
+</style>
+
+<style type="text/css">
+#container {
+}
+
+#content {
+    float:left;
+    width:70%;
+}
+
+#sidebar {
+    float:left;
+    width:340px;
+}
+</style>
+<style type="text/css">
+@font-face {
+    font-family: "Regular";
+    src: url({% static 'css/font/SourceSansPro-Regular.otf' %}) format("truetype");
+}
+*.customfont1 { 
+    font-family: "Semibold";
+    font-size:12px;
+    color:#565958;
+}
+@font-face {
+    font-family: "Semibold";
+    src: url({% static 'css/font/SourceSansPro-Semibold.otf' %}) format("truetype");
+}
+*.customfont2 { 
+    font-family: "Semibold";
+    font-size:20px;
+    color:#565958;
+}
+*.customfont20 { 
+    font-family: "Semibold";
+    font-size:22px;
+    color:#565958;
+}
+*.customfont21 { 
+    font-family: "Semibold";
+    font-size:14px;
+    color:#cacece;
+}
+*.customfont22 { 
+    font-family: "Semibold";
+    font-size:14px;
+    color:#565958;
+}
+*.customfont23 { 
+    font-family: "Semibold";
+    font-size:14px;
+    color:#b2b5b4;
+}
+*.customfont5 { 
+    font-family: "Semibold";
+    font-size:15px;
+    color:#6a6d6c;
+}
+*.customfont6 { 
+    font-family: "Semibold";
+    font-size:18px;
+    color:#6a6d6c;
+}
+*.customfont3 { 
+    font-family: "Regular";
+    font-size:12px;
+    color:#5491bd;
+}
+*.customfont4 { 
+    font-family: "Regular";
+    font-size:14px;
+    color:#888a8a;
+}
+*.customfont7 { 
+    font-family: "Regular";
+    font-size:15px;
+    color:#6a6d6c;
+}
+*.customfont9 { 
+    font-family: "Regular";
+    font-size:16px;
+    color:#565958;
+}
+@font-face {
+    font-family: "Light";
+    src: url({% static 'css/font/SourceSansPro-Light.otf' %}) format("truetype");
+}
+*.customfont8 { 
+    font-family: "Light";
+    font-size:12px;
+    color:#a7aaa9;
+}
+#overlay {
+    background:rgba(0,0,0,0.3);
+    display:none;
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:99998;
+    pointer-events:none
+}
+*::selection {
+    background:transparent;
+}
+
+*::-moz-selection {
+    background:transparent;
+}
+
+*::-webkit-selection {
+    background:transparent;
+}
+
+span.tooltip {
+      position: absolute;
+      width: 100px;
+      height: 60px;
+      line-height: 20px;
+      padding: 10px;
+      font-size: 14px;
+      text-align: center;
+      color: rgb(0, 0, 0);
+      background: rgb(51, 153, 204);
+      border: 4px solid rgb(51, 153, 204);
+      border-radius: 5px;
+      text-shadow: rgba(0, 0, 0, 0.0980392) 1px 1px 1px;
+      box-shadow: rgba(0, 0, 0, 0.0980392) 1px 1px 2px 0px;
+}
+
+span.tooltip:after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-width: 10px;
+      border-style: solid;
+      border-color: #3399cc transparent transparent transparent;
+      top: 84px;
+      left: 50px;
+}
+</style>
+<script type="text/javascript" src="{% static 'scripts/jquery-1.11.1.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/html2canvas.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/underscore.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/backbone.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/cake.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/jspdf.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/jquery.jeditable.js' %}" charset="utf-8"></script>
+
+<script type="text/javascript">
+function Random() { 
+    var Random = Math.floor(Math.random() * 9); 
+
+    var r_text = new Array ();
+    r_text[0] = "Start general...<br/> Start with your broadest ideas before getting to the<br/> specifics, it will make your brainstorm more effective.";
+    r_text[1] = "Be curious, not judgmental...<br/> Open up the possibilities and break down your assumptions,<br/> it will help you explore different ideas.";
+    r_text[2] = "Take a break...<br/> A good brainstorming session can get pretty lively. Refresh<br/> your mind before starting again. Go easy on the coffee!";
+    r_text[3] = "Minimise distractions...<br/> It’s all about focus so limit the distractions around you, it’s<br/> the best way to expand your ideas quicker";
+    r_text[4] = "What do your friends think?<br/> Share your brainstorm with friends to get a new perspective<br/> and develop your ideas further in conversation.";
+    r_text[5] = "Keep it concise...<br/> Using keywords for your ideas helps you see your<br/> brainstorm in an organised way.";
+    r_text[6] = "Breathe...<br/> Fresh air is great fuel for the brain to focus and be more<br/> creative. Why not take a walk before or after this brainstorm.";
+    r_text[7] = "Set a time limit...<br/> Whether it be five minutes, fifteen minutes, half an hour we<br/> don’t want you to burn out.";
+    r_text[8] = "More than ideas...<br/> Planning a trip or organising an event? See how Brainstorm<br/> can help you in other areas of life. Share your stories with us.";
+    document.getElementById("randomDiv").innerHTML = r_text[Random]
+    console.log(r_text[Random])
+}  
+
+    $(document).ready(function() {
+
+        $('#overlay').fadeIn(300);
+        $('#newBrainstorm').css('z-index', '99999');
+
+        Random();
+        function zoomhoverin(){document.getElementById("tooltipZoom").style.display='inline';}
+        function zoomhoverout(){document.getElementById("tooltipZoom").style.display='none';}
+        function centrehoverin(){document.getElementById("tooltipCentre").style.display='inline';}
+        function centrehoverout(){document.getElementById("tooltipCentre").style.display='none';}
+
+
+    //      $('#title').editable(function() {
+    //          document.getElementById('title').innerHTML;
+    //      });
+
+            $('.edit').editable('file:///home/futurenode/workspace/final-brainstorm/brainstorm.html/save.php', {
+                indicator : 'Saving...',
+                tooltip   : 'Click to edit...'
+            });
+            
+            $('.edit_area').editable('http://zero-point.github.io/brainstorm/save.php', { 
+                type      : 'textarea',
+                cancel    : 'Cancel',
+                submit    : 'OK',
+                indicator : '<img src="img/indicator.gif">',
+                tooltip   : 'Click to edit...'
+            });
+        });
+
+$(function(){
+
+      $(".editable").keypress(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+
+             if (document.selection) {
+                document.selection.createRange().pasteHTML("");
+             } else {
+                $(this).append("");
+             }
+        }
+    });
+});
+
+
+function func1(){
+    var title = document.getElementById("braintitle").value
+    if(title=="")   title = "New Brainstorm";
+    var root = new Sector({ label: title });
+    $("#pbraintitle").text(title);
+    document.getElementById("newBrainstorm").style.display="none";
+    $('#overlay').fadeOut(300);
+    $('#newBrainstorm').css('z-index', '1');
+    document.getElementById("zoom").style.display="none";
+    document.getElementById("column2").style.display="inline";
+}
+function func12(){
+    title = "New Brainstorm";
+    root = new Sector({ label: title });
+    $("#pbraintitle").text(title);
+    document.getElementById("newBrainstorm").style.display="none";
+    $('#overlay').fadeOut(300);
+    $('#newBrainstorm').css('z-index', '1');
+    document.getElementById("zoom").style.display="none";
+    document.getElementById("column2").style.display="inline";
+}
+
+function func2(){
+    document.getElementById("exitBrainstorm").style.display="none";
+    $('#overlay').fadeOut(300);
+    $('#exitBrainstorm').css('z-index', '1');
+    document.getElementById("zoom").style.display="none";
+    document.getElementById("column2").style.display="inline";
+}
+
+function newBrain(){
+
+    document.getElementById("exitBrainstorm").style.display='inline';
+    $('#overlay').fadeIn(300);
+    $('#exitBrainstorm').css('z-index', '99999');
+    document.getElementById("zoom").style.display="none";
+    document.getElementById("column2").style.display="none";
+    //var check = confirm("You are about to leave this brainstorm behind. Make sure you've saved it! And press OK when you're ready!");
+    //if (check == false)   return false; else window.location.href = window.location.href;
+
+};
+function smth() {
+alert("fafd");
+}
+function showit() {
+    tooltipCanvas.style.visibility='visible';
+}
+function hideit() {
+    tooltipCanvas.style.visibility='hidden';
+}
+</script>                                                                
+
         {% block head %}
         {% endblock %}
-    </head>
-    
-    <body>
+</head>
+    <body style="background:url("course/index.png") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-color: #cccccc;">
     
         {% include 'components/navbar.html' %}
 
         <!-- Main Content ----------------------------------------------------->
-        <!--<div class="container" style="padding-top:100px;">-->
+
             {% block content %}
             {% endblock %}
             
             {% block extracontent %}
             {% endblock %}
-        <!-- </div> -->
+
         
         <!-- Loading JS last to improve performance --------------------------->
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    
+	<script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/bootstrap-modal.js' %}"></script>
+<script>
+    $('#myButton').click(function(){
+        $("#someDiv a").replaceWith(function(){
+            return $("<span>" + $(this).html() + "</span>");
+        });
+    });
+
+    var btn = document.getElementById('btnSave');
+    btn.addEventListener("click", function() {
+        html2canvas(document.getElementById('canvas-container'), {
+                onrendered: function(canvas) {
+                var img = canvas.toDataURL("image/jpeg");
+                var doc = new jsPDF('landscape');
+                doc.addImage(img, 'JPEG', 0, 0, 0, 0);
+                //doc.addImage(img, 'JPEG', 0, 0, 300, 210);
+                var name = document.getElementById("braintitle").value + ".pdf"
+                doc.output('save', name);           
+            }
+        });    
+    });
+    var btn1 = document.getElementById('btnPrint');
+    btn1.addEventListener("click", function() {
+        html2canvas(document.getElementById('canvas-container'), {
+                onrendered: function(canvas) {
+                var img = canvas.toDataURL("image/jpeg");
+                var doc = new jsPDF();
+                doc.addImage(img, 'JPEG', 0, 0, 210, 105);
+                zoomBtn.style.visibility='hidden';
+                centreBtn.style.visibility='hidden';
+                tooltipCanvas.style.visibility='hidden';
+                column2.style.display='none';
+                window.print();
+                zoomBtn.style.visibility='visible';
+                centreBtn.style.visibility='visible';
+                tooltipCanvas.style.visibility='visible';
+                column2.style.display='inline';
+            }
+        });    
+    });
+    function sendByMail() {
+        var link = "mailto:" + "?subject=" + escape("Here's my Brainstorm!") + "&body=";
+        window.location.href = link;
+    };
+</script>
         <!-- Footer to bottom of page ----------------------------------------->
 </body>
 </html>

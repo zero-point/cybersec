@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript">
+var slideimages = new Array() // create new array to preload images
+slideimages[0] = new Image() // create new instance of image object
+slideimages[0].src = "../media/Get-started-1.png" // set image object src property to an image's src, preloading that image in the process
+slideimages[1] = new Image()
+slideimages[1].src = "../media/Get-started-2.png"
+slideimages[2] = new Image()
+slideimages[2].src = "../media/Get-started-3.png"
+slideimages[3] = new Image()
+slideimages[3].src = "../media/Get-started-4.png"
+</script>
+<a href="javascript:slideit()"><img src="../media/Get-started-1.png" id="slide" width=100 height=56 /></a>
+
+<script type="text/javascript">
+
+//variable that will increment through the images
+var step = 0
+var whichimage = 0
+
+function slideit(){
+ //if browser does not support the image object, exit.
+ if (!document.images)
+ 	return
+ document.getElementById('slide').src = slideimages[step].src
+ whichimage = step
+ if (step<3)
+ 	step++
+ else
+	window.location.href="/brainstorm"
+}
+
+function slidelink(){
+ if (whichimage == 0)
+  window.location = "link1.htm"
+ else if (whichimage == 1)
+  window.location = "link2.htm"
+ else if (whichimage == 2)
+  window.location = "link3.htm"
+}
+
+slideit()
+
+</script>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3><blockquote style="font-family: Calibri;">A web tool to brainstorm ideas quickly, conveniently and collaboratively. Its simple circular design helps to focus and generate ideas for projects, businesses and startups. 
+<a href="brainstorm/">Jump right in</a></blockquote></h3>
+	</div>
+</div>
+
+<div class="container">
+    <div class="col-md-8"><br/>
+            <p align="left">
+		<embed src="http://www.duaneharrison.co.uk/files/360fastdemo.mov" pluginspage="http://www.apple.com/quicktime/" controller="true" loop="true" autoplay="true" name="Recording 360" height="440" width="640">
+           </p>
+    </div>
+
+    <div class="col-md-4">
+    <div>
+        <h3><span class="glyphicon glyphicon-pencil"></span>&nbsp;Where Can I Sign Up?</h3>
+        <p align="justify">
+        	To sign up for this service please click below and fill in the short form.
+	</p>
+        <center>
+            <p>
+                <a class="btn btn-primary" role="button" href="/register/individual">
+                    <span class="glyphicon glyphicon-user"></span>
+                    &nbsp;Sign up</a>
+            </p>
+        </center>
+    </div>
+    <div>
+        <h3><span class="glyphicon glyphicon-import"></span>&nbsp;Returning User?</h3>
+        <p align="justify">
+            If you have already registered with us please fill in the details below to access the system.
+        </p>
+        <p>
+            {% if failedLogin %}
+    
+                <div class="alert alert-danger">
+                    <strong>Error</strong> Incorrect email/password. Please try again.
+                </div>   
+        
+            {% endif %}
+    
+            {% if inactiveAccount %}
+    
+                <div class="alert alert-warning">
+                    <strong>Warning</strong> Account inactive. Please contact an admin.
+                </div>   
+        
+            {% endif %}
+        </p>
+        <p>
+            <form role="form" action="/" method="post">
+            
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="username">Email</label>
+                    <input type="email" class="form-control" placeholder="Please enter your email address" id="email" name="username" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" placeholder="Please enter your password" id="password" name="password" />
+                </div>
+                <div class="form-group">
+                    <center>
+                        <input type="submit" class="btn btn-primary" value="Log In" />
+                        <input type="hidden" name="next" value="{{ next|escape }}" />
+                    </center>
+                </div>
+            </form>
+        </p>
+    </div>
+    </div>
+</div>
+
+{% endblock %}
